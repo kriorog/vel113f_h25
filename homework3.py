@@ -2,37 +2,55 @@ import pyomo.environ as pyo
 import numpy as np
 
 # define the pyomo model
-model = pyo.ConcreteModel(name="Job shop")
+model = pyo.ConcreteModel(name="Varme")
 
-# define a matrix A(j,k) with production time of product j on machine k
-A = np.array([
-    [3, 0, 10, 6],
-    [8, 2, 0, 3],
-    [0, 7, 4, 0]
-])
 
 # =======================================
 # FUNCTIONS
 # =======================================
 
 
-def prod_seq_rule(model, j, l, k):
+def rule_param_power_demand(model, j):
 
-    if (j in model.K[k].intersection(model.K[l])) and (l != k):
-        if model.S[j].ord(l) < model.S[j].ord(k):
-            return model.t[j, l] + model.tau[j, l] <= model.t[j, k]
-        else:
-            return pyo.Constraint.Skip
+    # define dict with demand in each time period
+    demand = {
+        1: 50,
+        2: 60,
+        3: 80,
+        4: 70,
+        5: 60
+    }
+
+    if j <= 5:
+        return demand[j]
+    else:
+        return demand[j-5]
+
+
+def rule_con_demand(model, j):
+    return sum(model.unit_load[k, j] for k in model.units) >= model.power_demand[j]
+
+
+def rule_con_cyclic(model, k, j):
+    if j <= 5:
+        return model.unit_load[k, j] == model.unit_load[k, j+5]
     else:
         return pyo.Constraint.Skip
 
 
-def start_seq_rule(model, i, j, k):
-
-    if i != j:
-        return model.t[i, k] + model.tau[i, k] <= model.t[j, k] + model.M * (1 - model.x[i, j, k])
+def rule_con_sequence(model, k, j):
+    if j <= len(model.time_periods)/2:
+        return sum(model.x[k, j] for j in pyo.RangeSet(j, j + 3)) <= 3
     else:
         return pyo.Constraint.Skip
+
+
+def rule_obj_cost(model):
+    return sum(
+        model.unit_load[k, j]
+        * model.running_cost[k] * model.T[j]
+        for k in model.units for j in model.time_periods
+    )
 
 
 def print_solution(result_model):
@@ -74,99 +92,118 @@ def print_solution(result_model):
 
 
 # define sets
-model.products = pyo.Set(
-    initialize = ['A', 'B', 'C']
+model.units = pyo.Set(
+    initialize=['M1', 'M2', 'M3']
 )
 
-model.machines = pyo.Set(
-    initialize = ['M1', 'M2', 'M3', 'M4']
-)
-
-model.K = pyo.Set(
-    model.machines,
-    initialize = {
-        'M1': ['A', 'B'],
-        'M2': ['B', 'C'],
-        'M3': ['A', 'C'],
-        'M4': ['A', 'B']
-    }
-)
-
-model.S = pyo.Set(
-    model.products,
-    initialize = {
-        'A': ['M1', 'M3', 'M4'],
-        'B': ['M1', 'M2', 'M4'],
-        'C': ['M2', 'M3']
-    }
-)
+model.time_periods = pyo.RangeSet(1, 10)
 
 # define parameters
-model.tau = pyo.Param(
-    model.products,
-    model.machines,
-    domain = pyo.NonNegativeReals,
-    initialize = lambda model, j, k: A[model.products.ord(j)-1, model.machines.ord(k)-1]
+model.T = pyo.Param(
+    model.time_periods,
+    domain=pyo.NonNegativeReals,
+    initialize=5
 )
 
-model.M = pyo.Param(
-    domain = pyo.NonNegativeReals,
-    initialize = np.sum(A)
+model.start_cost = pyo.Param(
+    model.units,
+    domain=pyo.NonNegativeReals,
+    initialize={
+        'M1': 10,
+        'M2': 13,
+        'M3': 16
+    }
+)
+
+model.running_cost = pyo.Param(
+    model.units,
+    domain=pyo.NonNegativeReals,
+    initialize={
+        'M1': 2.5,
+        'M2': 2.5,
+        'M3': 2.5
+    }
+)
+
+
+model.power_demand = pyo.Param(
+    model.time_periods,
+    domain=pyo.NonNegativeReals,
+    rule=rule_param_power_demand
+)
+
+model.unit_load_lb = pyo.Param(
+    model.units,
+    initialize={
+        'M1': 10,
+        'M2': 12,
+        'M3': 15
+    }
+)
+
+model.unit_load_ub = pyo.Param(
+    model.units,
+    initialize={
+        'M1': 50,
+        'M2': 45,
+        'M3': 55
+    }
 )
 
 # define variables
 model.x = pyo.Var(
-    model.products,
-    model.products,
-    model.machines,
-    within = pyo.Binary,
-    initialize = 0
+    model.units,
+    model.time_periods,
+    domain=pyo.Binary,
+    initialize=0
 )
 
-model.t = pyo.Var(
-    model.products,
-    model.machines,
-    within = pyo.NonNegativeReals
-)
-
-model.T = pyo.Var(
-    within = pyo.NonNegativeReals
+model.unit_load = pyo.Var(
+    model.units,
+    model.time_periods,
+    domain=pyo.NonNegativeReals
 )
 
 
 # define constraints
-model.con_start_seq = pyo.Constraint(
-    model.products,
-    model.products,
-    model.machines,
-    rule = start_seq_rule
+model.con_unit_load_ub = pyo.Constraint(
+    model.units,
+    model.time_periods,
+    rule=lambda model, k, j: model.unit_load[k, j] <= model.x[k, j]*model.unit_load_ub[k]
 )
 
-model.con_symmetry = pyo.Constraint(
-    model.products,
-    model.products,
-    model.machines,
-    rule = lambda model, i, j, k: model.x[i, j, k] + model.x[j, i, k] == 1 if i != j else pyo.Constraint.Skip
+model.con_unit_load_lb = pyo.Constraint(
+    model.units,
+    model.time_periods,
+    rule=lambda model, k, j: model.unit_load[k, j] >= model.x[k, j]*model.unit_load_lb[k]
 )
 
-model.total_time = pyo.Constraint(
-    model.products,
-    model.machines,
-    rule = lambda model, j, k: model.t[j, k] + model.tau[j, k] <= model.T if j in model.K[k] else pyo.Constraint.Skip
+model.con_demand = pyo.Constraint(
+    model.time_periods,
+    rule=rule_con_demand
 )
 
-model.prod_seq = pyo.Constraint(
-    model.products,
-    model.machines,
-    model.machines,
-    rule = prod_seq_rule    # use rule function because lambda expression is too long
+
+model.con_cyclic = pyo.Constraint(
+    model.units,
+    model.time_periods,
+    rule=rule_con_cyclic
+)
+
+model.con_sequence = pyo.Constraint(
+    model.units,
+    model.time_periods,
+    rule=rule_con_sequence
 )
 
 # define objective
-model.obj_time = pyo.Objective(
-    expr = model.T,
-    sense = pyo.minimize
+model.obj_cost = pyo.Objective(
+    rule=rule_obj_cost,
+    sense=pyo.minimize
 )
+
+# model.con_sequence.deactivate()
+# model.con_cyclic.deactivate()
 
 # choose the solver 'cplex' - commercial solver with free academic license - you need to install software from IBM
 solver_path = 'C:\\Program Files\\IBM\\ILOG\\CPLEX_Studio_Community2211\\cplex\\bin\\x64_win64\\cplex.exe'
@@ -187,14 +224,15 @@ model.pprint()
 
 """ NEXT MODEL """
 # now fix the solution and solve relaxed problem
-model.x.fix()
+# model.x.fix()
 
 # dual variable suffix to model
-model.dual = pyo.Suffix(
-    direction=pyo.Suffix.IMPORT_EXPORT
-)
+# model.dual = pyo.Suffix(
+#    direction=pyo.Suffix.IMPORT_EXPORT
+#)
 
-sol_lp = opt.solve(model, tee = False)
+sol_lp = opt.solve(model, tee=True)
 # sol_lp = solver_manager.solve(model, opt = opt)   # using neos
 sol_milp.write()
 model.pprint()
+# print_solution(model)
