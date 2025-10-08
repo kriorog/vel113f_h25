@@ -74,7 +74,7 @@ $$
 \hspace{0.25 cm} j \leq N_T-4
 $$
 
-We do not need any constraints for indices $j$ where $N_T-4 \leq j \leq N_T$ since the state variables $x_{k,j}$ are apporpriately constrained through the cyclical constraint.
+We do not need any constraints for indices $j$ where $N_T-4 < j \leq N_T$ since the state variables $x_{k,j}$ are apporpriately constrained through the cyclical constraint.
 
 ### Start/stop condition of each power unit
 This constraint is defined to force the required behaviour of the state variables $x_{k,j}$ based on the values of both start/stop variables $y_{k,j}$ and $z_{k,j}$ respectively.
@@ -201,7 +201,7 @@ The objective is then to minimize $R+S+I$ or equivalently $R+W+C+I$.
 After $n$ schedules, the total cost is $n(R+S)+I$
 
 # Implementing and solving
-The optimization model is implemented in python using Pyomo. See separate "varme.py" file for the implemented model. CPLEX is used as a solver.
+The optimization model is implemented in python using Pyomo. See separate "varme.py" file for the implemented model. CPLEX is used as a solver, either using a locallu installed \texttt{.exe} or through NEOS.
 
 To interrogate the solution, two models are run. The first model is as defined, the second one fixes all integar variables and solves the relaxed problem to obtain the dual variables. The duals are inspected to, hopefully, extract some interesting information on the problem constraints and their effect on the optimal solution.
 

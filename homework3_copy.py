@@ -1,5 +1,5 @@
 import pyomo.environ as pyo
-import numpy as np
+import os
 
 # define the pyomo model
 model = pyo.ConcreteModel(name="Varme")
@@ -306,17 +306,19 @@ model.obj_cost = pyo.Objective(
     sense=pyo.minimize
 )
 
+'''
 # choose the solver 'cplex' - commercial solver with free academic license - you need to install software from IBM
 solver_path = 'C:\\Program Files\\IBM\\ILOG\\CPLEX_Studio_Community2211\\cplex\\bin\\x64_win64\\cplex.exe'
 opt = pyo.SolverFactory('cplex', executable=solver_path)
 sol_milp = opt.solve(model, tee=False)
+'''
 
-"""# use neos
+# use neos
 solver_manager = pyo.SolverManagerFactory('neos')
 os.environ['NEOS_EMAIL'] = 'kristjanor@hi.is'
-opt = pyo.SolverFactory('glpk')
+opt = pyo.SolverFactory('cbc')
 sol_milp = solver_manager.solve(model, opt = opt)
-"""
+
 
 # print output
 sol_milp.write()
@@ -325,15 +327,18 @@ model.pprint()
 
 """ NEXT MODEL """
 # now fix the solution and solve relaxed problem
-# model.x.fix()
+model.x.fix()
+model.y.fix()
+model.z.fix()
+model.w.fix()
 
 # dual variable suffix to model
-# model.dual = pyo.Suffix(
-#    direction=pyo.Suffix.IMPORT_EXPORT
-#)
+model.dual = pyo.Suffix(
+    direction=pyo.Suffix.EXPORT
+)
 
-sol_lp = opt.solve(model, tee=True)
-# sol_lp = solver_manager.solve(model, opt = opt)   # using neos
+# sol_lp = opt.solve(model, tee=True)
+sol_lp = solver_manager.solve(model, opt = opt)   # using neos
 sol_milp.write()
 model.pprint()
 # print_solution(model)
