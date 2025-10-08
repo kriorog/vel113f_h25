@@ -65,7 +65,7 @@ def rule_con_warm_start_lb(model, k, j):
 
 def rule_con_warm_start_ub(model, k, j):
     if j >= 2:
-        return model.z[k, j - 1] + model.y[k, j] <= (1 - model.w[k, j])
+        return model.z[k, j - 1] + model.y[k, j] <= 2*model.w[k, j] + (1 - model.w[k, j])
     else:
         return model.z[k, j] + model.w[k, j] == 0
 
@@ -73,7 +73,7 @@ def rule_con_warm_start_ub(model, k, j):
 def rule_obj_cost(model):
     initial_cold_start_cost = sum(
         (
-            model.y[k, 1] * 1.5 * model.start_cost[k]
+           1.5 * model.start_cost[k]
         )
         for k in model.units
     )
