@@ -49,6 +49,7 @@ def rule_con_start_lb(model, k, j):
     else:
         return model.x[k, j] >= model.y[k, j]
 
+
 def rule_con_start_ub(model, k, j):
     if j >= 2:
         return model.x[k, j] - model.x[k, j-1] <= (1 - model.z[k, j]) - (1 - model.y[k, j])
@@ -75,6 +76,18 @@ def rule_obj_cost(model):
         (
            1.5 * model.start_cost[k]
         )
+        *
+        (
+            sum(
+                model.y[k, j]
+                for j in list(model.time_periods)[:6]
+            )
+            -
+            sum(
+                model.y[k, j]
+                for j in list(model.time_periods)[5:]
+            )
+        )
         for k in model.units
     )
 
@@ -94,7 +107,7 @@ def rule_obj_cost(model):
         for k in model.units
     )
 
-    return initial_cold_start_cost + repeat_cold_start_cost + repeat_warm_start_cost
+    return repeat_cold_start_cost + repeat_warm_start_cost + initial_cold_start_cost
 
 
 def print_solution(result_model):

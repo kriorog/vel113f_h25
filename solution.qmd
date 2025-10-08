@@ -1,11 +1,13 @@
 ---
-title: Homework 3 - Solution
-author: Kristján Röx
-date: 7 October 2025
+title: Homework 3 - Suggested Solution
+subtitle: Design Optimization VÉL113F, fall 2025
+author: Kristján Rögnvaldsson (kristjanor@hi.is)
 format: pdf
+number-sections: true
 ---
 
-# Definitions - sets, parameters, variables
+# Optimization model
+## Definitions - sets, parameters, variables
 Let $\mathcal{U}$ be the set of power units, indexed with $k$. Total number of units, i.e. the set cardinality, is $N_U$.
 
 Let $\mathcal{T}$ be the set of time periods in the schedule, indexed with $j$. Total number of time periods is $N_T$.
@@ -29,16 +31,16 @@ $z_{k, j}$ is a binary variable describing if unit $k$ is turned off at the star
 
 $w_{k,j}$ is a binary variable describing if unit $k$ is started warm a the start of time period $j$.
 
-# Constraints
+## Constraints
 
-## Power output of each unit
-A power unit $k$ producing power during time period $j$ is constrained to producing power $p_{k,j}$ within the lower and upper power limits of that unit, i.e. $\underbar{p}_k$ and $\overbar{p}_k$ respectively. We multiply each side of the constraint with $x_{k,j}$ to constrain a turned off unit to produce zero power.
+### Power output of each unit
+A power unit $k$ producing power during time period $j$ is constrained to produce power $p_{k,j}$ between the lower and upper power limits of that unit, i.e. $\underbar{p}_k$ and $\overbar{p}_k$ respectively. We multiply each side of the constraint with $x_{k,j}$ to constrain a turned off unit to produce zero power.
 
 $$ 
 x_{k,j}\underbar{p}_k \leq p_{k,j} \leq x_{k,j}\overbar{p}_k \hspace{0.5 cm} \forall (k,j) \in \mathcal{U} \times \mathcal{T}
 $$
 
-## Power demand for each time period
+### Power demand for each time period
 For each time period $j$, the total power produced $p_{k,j}$ by all power units must be at least as great as the power demand.
 
 $$
@@ -46,7 +48,7 @@ $$
 $$
 
 
-## Cyclic schedule
+### Cyclic schedule
 One way to constrain our schedule to by cyclical is to optimize over two consequtive schedules. 
 
 Let our set $\mathcal{T}$ contain time periods of two consequtive schedules, with total $N_T = 10$ time periods. Each schedule then has $N_T/2 = 5$ time periods, as we have from the problem definition.
@@ -69,17 +71,15 @@ Due to cyclicity, we are now optimizing over two consequtive schedules of 5 time
 $$
 \sum_{j}^{j+4} x_{k,j} \leq 3 
 \hspace{0.5 cm} \forall j \in \mathcal{T}, 
-\hspace{0.25 cm} j+4 \leq N_T
+\hspace{0.25 cm} j \leq N_T-4
 $$
 
 We do not need any constraints for indices $j$ where $N_T-4 \leq j \leq N_T$ since the state variables $x_{k,j}$ are apporpriately constrained through the cyclical constraint.
 
-## Start/stop condition of each power unit
-This constraint is defined enforce the required behaviour of the state variables $x_{k,j}$ based on the values of both the start/stop variables $y_{k,j}$ and $z_{k,j}$ respectively.
+### Start/stop condition of each power unit
+This constraint is defined to force the required behaviour of the state variables $x_{k,j}$ based on the values of both start/stop variables $y_{k,j}$ and $z_{k,j}$ respectively.
 
 The basic principle here is for a machine $k$ to be started during time period $j$, it must have been turned off in the previous time period $j-1$. The difference in the state variables $x$ for these two states, i.e. $x_{k,j}-x_{k,j-1}$, thus must be 1 for a start, and any other value for for any other condition (i.e. 0 or -1). A value of -1 means a unit was stopped, and 0 means no change in state.
-
-We also want our binary variable $y_{k,j}$ to control if a power unit $k$ is started in time period $j$, and the binary variable $z_{k,j}$ to force a unit to be stopped. 
 
 The constraint is constructed by using the binary control variables $y$ and $z$ to force the state difference $x_{k,j}-x_{k,j-1}$ to take the required values.
 
@@ -102,7 +102,7 @@ $$
 x_{k,1} = y_{k,1}
 $$
 
-Based on this definition, we need an additional constraint on the control variables $y$ and $z$ which must take different values for each $(k,j)$ if there is a state change, or to both be zero if there is no state change (neither start nor stop).
+Based on this definition, we need an additional constraint on the control variables $y$ and $z$ which cannot both be 1 at the same time, and must take different values for each $(k,j)$ if there is a state change, or to both be zero if there is no state change (neither start nor stop).
 
 $$
 y_{k,j} + z_{k,j} \leq 1
@@ -121,7 +121,7 @@ With these constraints, we obtain the desired behaviour.
 * If there is no state change, then $y=0$ and $z=0$, and the constraint is $0 \leq x_{k,j} - x_{k,j-1} \leq 0$, forcing the states to reflect a no change in state.
 
 
-## Warm start
+### Warm start
 A warm start is a special type of start, which we can control with our start/stop constraint. A warm start occurs for machine $k$ in time period $j$ if $y_{k_j}=1$ and $z_{k,j-1}=1$, i.e. the machine was stopped in the previous time periods and then started in the current time period. This means it was turned off for just one time period in between, which is a warm start by definition.
 
 To describe and to control a warm start to occur, we use the binary variable $w_{j,k}$ which takes the value 1 for a warm start, 0 otherwise.
@@ -144,10 +144,12 @@ This definition provides the desired behaviour, since the sum of two binary vari
 
 Note that $w_{k,j} = 0$ does not describe a cold start. However, we can observe that if a start occurs and it is not warm, then it must be cold.
 
-# Objective
-Our objective is the total production cost for our schedule. Since the first start of each power unit is cold, there is a fixed start cost in the first schedule, which may not be repeated in any subsequent schedule. Therefore, the repeating schedule is the second schedule in our model. The first schedule represent a possibly non-repeating schedule.
+## Objective
+Our objective is the total repeating production cost for our schedule. The repeating production cost can be obtained from our second schedule, which is repeated onwards. The first schedule is not a fully repeating schedule, since the first start of each unit in the first schedule must be cold, but that may not be case for the same time period in each subsequent schedule. For example, if unit $k$ is started in time period $j=1$ (i.e. in the first schedule) it is a cold start, but if it is started in the same time period $j=6$ in the next schedule the start does not have to be cold, but it could be.
 
-The total cost comprises the total running cost $R$ and the total startup costs $S$, which are different for warm and cold starts.
+Therefore, there can be additional startup cost incurred in the first schedule which is not repeated.
+
+Let's first consider the repeating production cost. The total cost comprises the total running cost $R$ and the total startup costs $S$, for which cold starts are 50% more costly than warm starts.
 
 The total repeating running cost of the cyclical schedule is dependent on the power output of each unit $k$ in each time period $j$.
 
@@ -157,7 +159,7 @@ $$
 
 The startup cost $S$ is dependent on the total number of warm and cold starts in the repeating schedule. We can count the total number of starts through the variables $y_{k,j}$ and the number of warm starts can be found through the variables $w_{k,j}$. Since a start is either warm or cold, the number of cold starts is the difference between the total starts and total warm starts.
 
-Let $S = W + C + I$, where $W$ is the warm startup costs, $C$ is the cold start, and $I$ is a fixed initial startup cost.
+Let $S = W + C$, where $W$ is the warm start cost and $C$ is the cold start cost.
 
 $$
 W = \sum_{k=1}^{N_U} \sum_{j=N_T/2+1}^{N_T} w_{k,j}s_k
@@ -165,18 +167,42 @@ $$
 
 $$
 C = 
+    1.5\,s_k
     \left(
         \sum_{k=1}^{N_U} \sum_{j=N_T/2+1}^{N_T} y_{k,j} - w_{k,j}
     \right)
-    1.5s_k
 $$
 
-$$ 
-I = 1.5\sum_{k=1}^{N_U} s_k
+where the 50% cost increase on cold starts is included through $1.5s_k$.
+
+Let's now consider the possible additional startup cost in the first schedule. Our warm start constraint requires two consequtive time periods to determine if a start is warm or cold. This means that a started unit $k$ in the first time period in the first schedule ($x_{k,1}=1$ and $y_{k,1}=1$) does not imply that $x_{k,6}=1$ and $y_{k,6}=1$, since the unit may be left running from time period $j=5$ in the first schedule before beginning a new schedule.
+
+If this is the case, then the first schedule will have one more start than the second schedule, which will be a cold start. If this does not apply, both schedules will have the same number of starts. The difference in total starts between schedules will either be 1 or 0, a binary result.
+
+We can then account for this possiblity with the initial start cost function $I$
+
+$$
+I = 
+    \sum_{k=1}^{N_U} 
+    1.5\,s_k
+    \underbrace{
+        \left(
+            \sum_{j=1}^{N_T/2} y_{k,j} 
+            - 
+            \sum_{j=N_T/2+1}^{N_T} y_{k,j} 
+        \right)
+    }_{
+        \text{takes value } 0 \text{ or } 1 \text{ for each } k
+    }
 $$
 
-where the 50% cost increase on cold starts is included through $1.5s_k$. The fixed cold start cost is non-repeating cost since the first start of each unit in the first schedule must be cold, which is a cold start cost we can't avoid. 
+The objective is then to minimize $R+S+I$ or equivalently $R+W+C+I$.
 
-For optimization purposes, the fixed cold start cost $I$ can be omitted, as it is a fixed translation of the objective function.
+After $n$ schedules, the total cost is $n(R+S)+I$
 
-The objective is then to minimize $R+S$ or equivalently $R+S-I$.
+# Implementing and solving
+The optimization model is implemented in python using Pyomo. See separate "varme.py" file for the implemented model. CPLEX is used as a solver.
+
+To interrogate the solution, two models are run. The first model is as defined, the second one fixes all integar variables and solves the relaxed problem to obtain the dual variables. The duals are inspected to, hopefully, extract some interesting information on the problem constraints and their effect on the optimal solution.
+
+# Solution
