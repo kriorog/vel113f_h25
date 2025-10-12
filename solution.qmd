@@ -25,39 +25,24 @@ $x_{k,j}$ is a binary variable describing if machine $k$ is turned on during tim
 
 $p_{k,j}$ is a real variable describing the power output of unit $k$ during time period $j$.
 
-$\gamma_{k, j}$  is a real variable between 0 and 1 describing the power output \% of unit $k$ during time period $j$.
-
 $y_{k, j}$ is a binary variable describing if unit $k$ is turned on at the start of time period $j$.
 
 $z_{k, j}$ is a binary variable describing if unit $k$ is turned off at the start of time period $j$.
 
 $w_{k,j}$ is a binary variable describing if unit $k$ is started warm a the start of time period $j$.
 
-One does not need both $p$ and $\gamma$ to define the problem - but the variable $\gamma$ provides a quick inspection of the power setting of each unit in each time period between its min and max power values.
-
 ## Constraints
 
-### Relationship between $\gamma$ and unit on/off state
-The load output ratio $\gamma$ can be any value between $0$ and $1$ if a unit is turned on, but must be zero if it is off.
-
-$$
-\gamma_{k, j} \leq x_{k, j} \hspace{0.5 cm} \forall (k, j) \in \mathcal{U} \times \mathcal{T}
-$$
 
 ### Power output of each unit
 A power unit $k$ producing power during time period $j$ is constrained to produce power $p_{k,j}$ between the lower and upper power limits of that unit depending on the value of $\gamma_{k, j}$, i.e. $\underbar{p}_k$ and $\overbar{p}_k$ respectively. We multiply each side of the constraint with $x_{k,j}$ to constrain a turned off unit to produce zero power.
 
 $$ 
-p_{k, j} = x_{k, j} \, \underbar{p}_k + \gamma_{k, j} \left( \overbar{p}_k - \underbar{p}_k \ \right)
+x_{k, j} \, \underbar{p}_k 
+\leq 
+p_{k, j}  
+\leq x_{k, j} \, \overbar{p}_k
 $$
-
-If a unit is turned on, then $x_{k, j}=1$, and the constraint becomes
-$$
-p_{k, j} = \underbar{p}_k + \gamma_{k, j} \left( \overbar{p}_k - \underbar{p}_k \ \right)
-$$
-which yields a power output between the defined lower and upper bound for each unit $k$.
-
-If the unit is off, then $x_{k, j} = 0$, and the constraint becomes $p_{k, j} = 0$. If we had not included $x_{k, j}$ in the first element on the right hand side of the constraint, we would not force a turned off unit to produce zero power.
 
 ### Power demand for each time period
 For each time period $j$, the total power produced $p_{k,j}$ by all power units must be at least as great as the power demand.
@@ -84,7 +69,7 @@ $$
 
 For example, the state of machine $k$ in time period $j=1$ is constrained to be equal to the state in time period $j=N_T/2+1 = 5+1=6$, i.e. the matching time period in the second schedule, and so on.
 
-## Each unit limited to being turned on for max 3 consequtive time periods
+## Max 3 consecutive running periods for each unit
 Due to cyclicity, we are now optimizing over two consequtive schedules of 5 time periods each, i.e. $N_T = 10$. Constraining each machine to be turned on for a maximum of 3 consequtive time periods is achieved by constraining the state of each machine for every 4 consequtive time periods to have only 3 time periods where it is turned on.
 
 $$
@@ -93,7 +78,7 @@ $$
 \hspace{0.25 cm} j \leq N_T-4
 $$
 
-We do not need any constraints for indices $j$ where $N_T-4 < j \leq N_T$ since the state variables $x_{k,j}$ are apporpriately constrained through the cyclical constraint.
+We do not need any constraints for indices $j$ where $N_T-4 < j \leq N_T$ since the state variables $x_{k,j}$ are appropriately constrained through the cyclical constraint.
 
 ### Start/stop condition of each power unit
 This constraint is defined to force the required behaviour of the state variables $x_{k,j}$ based on the values of both start/stop variables $y_{k,j}$ and $z_{k,j}$ respectively.
@@ -161,7 +146,7 @@ This definition provides the desired behaviour, since the sum of two binary vari
 
 * If there is no warm start, then $w_{k,j}=0$ and the constraint is $0 \leq y_{k,j}+z_{k,j-1} \leq 1$.
 
-Note that $w_{k,j} = 0$ does not describe a cold start. However, we can observe that if a start occurs and it is not warm, then it must be cold.
+Note that $w_{k,j} = 0$ does not force a cold start. However, we can observe that if a start occurs and it is not warm, then it must be cold.
 
 ## Objective
 Our objective is the total repeating production cost for our schedule. The repeating production cost can be obtained from our second schedule, which is repeated onwards. The first schedule is not a fully repeating schedule, since the first start of each unit in the first schedule must be cold, but that may not be case for the same time period in each subsequent schedule. For example, if unit $k$ is started in time period $j=1$ (i.e. in the first schedule) it is a cold start, but if it is started in the same time period $j=6$ in the next schedule the start does not have to be cold, but it could be.
