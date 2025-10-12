@@ -25,20 +25,39 @@ $x_{k,j}$ is a binary variable describing if machine $k$ is turned on during tim
 
 $p_{k,j}$ is a real variable describing the power output of unit $k$ during time period $j$.
 
+$\gamma_{k, j}$  is a real variable between 0 and 1 describing the power output \% of unit $k$ during time period $j$.
+
 $y_{k, j}$ is a binary variable describing if unit $k$ is turned on at the start of time period $j$.
 
 $z_{k, j}$ is a binary variable describing if unit $k$ is turned off at the start of time period $j$.
 
 $w_{k,j}$ is a binary variable describing if unit $k$ is started warm a the start of time period $j$.
 
+One does not need both $p$ and $\gamma$ to define the problem - but the variable $\gamma$ provides a quick inspection of the power setting of each unit in each time period between its min and max power values.
+
 ## Constraints
 
+### Relationship between $\gamma$ and unit on/off state
+The load output ratio $\gamma$ can be any value between $0$ and $1$ if a unit is turned on, but must be zero if it is off.
+
+$$
+\gamma_{k, j} \leq x_{k, j} \hspace{0.5 cm} \forall (k, j) \in \mathcal{U} \times \mathcal{T}
+$$
+
 ### Power output of each unit
-A power unit $k$ producing power during time period $j$ is constrained to produce power $p_{k,j}$ between the lower and upper power limits of that unit, i.e. $\underbar{p}_k$ and $\overbar{p}_k$ respectively. We multiply each side of the constraint with $x_{k,j}$ to constrain a turned off unit to produce zero power.
+A power unit $k$ producing power during time period $j$ is constrained to produce power $p_{k,j}$ between the lower and upper power limits of that unit depending on the value of $\gamma_{k, j}$, i.e. $\underbar{p}_k$ and $\overbar{p}_k$ respectively. We multiply each side of the constraint with $x_{k,j}$ to constrain a turned off unit to produce zero power.
 
 $$ 
-x_{k,j}\underbar{p}_k \leq p_{k,j} \leq x_{k,j}\overbar{p}_k \hspace{0.5 cm} \forall (k,j) \in \mathcal{U} \times \mathcal{T}
+p_{k, j} = x_{k, j} \, \underbar{p}_k + \gamma_{k, j} \left( \overbar{p}_k - \underbar{p}_k \ \right)
 $$
+
+If a unit is turned on, then $x_{k, j}=1$, and the constraint becomes
+$$
+p_{k, j} = \underbar{p}_k + \gamma_{k, j} \left( \overbar{p}_k - \underbar{p}_k \ \right)
+$$
+which yields a power output between the defined lower and upper bound for each unit $k$.
+
+If the unit is off, then $x_{k, j} = 0$, and the constraint becomes $p_{k, j} = 0$. If we had not included $x_{k, j}$ in the first element on the right hand side of the constraint, we would not force a turned off unit to produce zero power.
 
 ### Power demand for each time period
 For each time period $j$, the total power produced $p_{k,j}$ by all power units must be at least as great as the power demand.
@@ -201,8 +220,44 @@ The objective is then to minimize $R+S+I$ or equivalently $R+W+C+I$.
 After $n$ schedules, the total cost is $n(R+S)+I$
 
 # Implementing and solving
-The optimization model is implemented in python using Pyomo. See separate "varme.py" file for the implemented model. CPLEX is used as a solver, either using a locallu installed \texttt{.exe} or through NEOS.
+The optimization model is implemented in python using Pyomo. See separate "varme.py" file for the implemented model. GLPK is used as a solver, either using a locallu installed \texttt{.exe} or through NEOS.
 
 To interrogate the solution, two models are run. The first model is as defined, the second one fixes all integar variables and solves the relaxed problem to obtain the dual variables. The duals are inspected to, hopefully, extract some interesting information on the problem constraints and their effect on the optimal solution.
 
+One thing to note - if using NEOS - the dual variables may not be returned although included in the model. Using a locally installed version of GLPK does return the duals. Note also that duals can only be returned for a linear problem, not for a problem with integer variables.
+
 # Solution
+The minimum cost from the optimization is 7913.5 kkr. There is no additional startup cost $I$ included in this solution, so this cost is the repeating production schedule cost. All starts are cold, i.e. $w_{k, j}=0$ for all $(k,j)$.
+
+Refer to the associated text file \texttt{varme\_output.txt} for the python printout of the solution.
+
+# Inspection
+After running the defined MILP (Mixed-Integer Linear Program), we fix all of the integer variables to the values obtained in the MILP solution. This gives us a relaxed LP. We now solve this LP again using GLPK and extract the dual variables. 
+
+Keep in mind that these dual variables apply to the relaxed LP and not directly to our original MILP - however their interpretation can give us insight into possible changes to the MILP constraint that would yield a lower optimal cost value. In general, duality theory is only valid for continuous problems (all functions continuous).
+
+The dual variables are shown in the associated file \texttt{varme\_ouput.txt} solution printout.
+
+The dual variables we are mainly interested in are those that contain real valued variables, and possibly integer variables as well. Since we have fixed the values of all integer variables, they are just scalars in each constraint.
+
+* Dual variables assocated with the total power demand constraint (\texttt{con\_demand} in the pyomo model) in each constraint are positive or zero. This makes sense since increasing the required power production, increasing at least running costs, and starting costs if additional production capacity is needed to meet the added demand. The opposite case will reduce costs, i.e. reducing the power demand in each period. 
+
+    However, we can't really control the power demand as a model design element. It is an external factor that we have to meet.
+
+* The constraint on $\gamma$ based on the value of $x$ (constraint \texttt{con\_gamma} in the pyomo model) provides some intereseting insight. For example, the dual variables associated unit 1 in time period 8 and 9 in our two schedule model (time periods 3 and 4 in the repeating schedule) are negative (-500 kkr). We see from the solution values of $x$ that unit 1 is turned off during these periods. These duals indicate that turning unit 1 on (i.e. increasing $x$ from 0 to 1) during these time periods would reduce the total production cost. From our solution, we see that units 2 and 3 are turned on in these time periods to supply the required power. Considering that unit 3 has the highest start cost, but slightly lower running cost than the other units, turning on unit 1 would mean not starting unit in time period 3 and run only unit 1 and 2 in time periods 3 and 4. This is reinforced by the dual variables for unit 2 in the same periods being zero - i.e. indicating that changing the state of unit 2 would have no effect on the output.
+
+    Although this would reduce the cost - we can't implement this because it requires a unit to be running for more than 3 consequtive time periods, which is not permitted.
+
+    The lowest dual variable related to $\gamma$, i.e. indicating greatest reduction in objective value, is for unit 3 in time period 7 (time period 2 in the repeating schedule). Noting that unit 3 is turned off in this time period, this dual means that turning it on would allow the model to produce a lower total cost value. Yet again, we can't do this because it would mean running unit 3 in more than 3 consequtive time periods.
+
+    Doing any changes to the model related to the above, i.e. fixing certain units to run at a given time period will not provdie a real reduction in optimal cost that satisfies all constraints, because if that were the case, then it would have been the solution to the problem.
+
+* The next dual variables that are negative are related to the power output $p$ and the associated upper and lower bounds on the output power (\texttt{con\_unit\_load} in the pyomo model). Similar to \texttt{con\_gamma}, most of the negative dual variables describe a change to the model which we can't do unless violating the max 3 consequtive running period constraint for each unit. 
+
+    The only constraint for which this does not apply is for unit 3 in time periods 3 and 4, where these units are already running at 100% power output, i.e. 55 MW in each period. Since unit 3 cannot supply the power demand alone in these time periods, we see that unit 2 is also running to supply the remaining power. Since the running cost of unit 3 is lower than for unit 2, this dual is telling us that increasing the max power output of unit 3 will reduce the total cost.
+
+    The power output of unit 2 is 25 MW and 15 MW in time periods 3 and 4 respectively. We would like to transfer the power generation of unit 2 to unit 3 in each period, so we need to increase the production capacity of unit 3 by min 25 MW for this to be possible. The dual variables associated with each time period is $-1 \text{ kkr/MW}$, so total of $-2 \text{ kkr/MW}$ for both periods. The objective has units kkr and the constraint has units MW, so the dual will have units kkr/MW. The expected break even cost for this additional power generation of unit 3 is $-2 \cdot 25 = -50 \text{ kkr}$.
+
+    Running the model (see model \texttt{varme\_modified.py}) again with unit 3 power capability upper bound increased by 25 MW yields an new optimal cost of 7863.5 kkr, a reduction of 50 kkr from the previous solution with all constraints satisfied. This matches our expected cost reduction from inspecting the duals. A printout of the modified solution is provided in the file \texttt{varme\_modified\_output.txt}. We can that we added the minimum amount of capabilty since unit 3 is still run at 100\% capacity in time period 3 and unit 2 is off.
+
+    An interesting result in the model with this change is that unit 2 is never turned on. We can now satisfy the demand with units 1 and 3. This makes sense since units 1 and 2 have the same running cost, but unit 2 has lower start cost. Ther are no occasions where two units run at the same time, so there is no further change to production capability that can be done to further reduce production cost without having to violate the cyclicity and max 3 consequitive time period constraints. Other changes that may reduce cost are obvious ones, such as reducing the start and running costs of each unit.
