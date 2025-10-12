@@ -163,7 +163,7 @@ model.time_periods = pyo.RangeSet(1, 10)
 model.tau = pyo.Param(
     model.time_periods,
     domain=pyo.NonNegativeReals,
-    initialize=lambda model, j: 5 if (np.mod(j, 5)!=0) else 4
+    initialize=lambda model, j: 5 if (j%5!=0) else 4
 )
 
 # start cost of each power unit k
@@ -227,16 +227,6 @@ model.x = pyo.Var(
     initialize=0
 )
 
-# gamma is a real variable between 0 and 1 describing the power output of unit k in time period j 
-# as a fraction of its possible power range
-
-model.gamma = pyo.Var(
-    model.power_units,
-    model.time_periods,
-    domain=pyo.NonNegativeReals,
-    bounds=(0, 1)
-)
-
 # real variable power output of unit k in time period j
 model.p = pyo.Var(
     model.power_units,
@@ -272,18 +262,18 @@ model.w = pyo.Var(
 # CONSTRAINTS
 # ======================================
 
-# constraint to define relationship between load ratio gamma to power output p of each unit k in time period j
-model.con_gamma = pyo.Constraint(
+# constraint for upper bound on produced power of each unit k in time period j
+model.con_load_ub = pyo.Constraint(
     model.power_units,
     model.time_periods,
-    rule=lambda model, k, j: model.gamma[k, j] <= model.x[k, j]
+    rule=lambda model, k, j: model.p[k, j] <= model.x[k, j]*model.unit_limit_ub[k]
 )
 
-# constraint for upper bound on produced power of each unit k in time period j
-model.con_unit_load = pyo.Constraint(
+# constraint for lower bound on produced power of each unit k in time period j
+model.con_load_lb = pyo.Constraint(
     model.power_units,
     model.time_periods,
-    rule=lambda model, k, j: model.p[k, j] == model.x[k, j]*model.unit_limit_lb[k] + model.gamma[k, j]*(model.unit_limit_ub[k] - model.unit_limit_lb[k])
+    rule=lambda model, k, j: model.p[k, j] >= model.x[k, j]*model.unit_limit_lb[k]
 )
 
 # constraint to ensure total power production meets demand in each time period j
