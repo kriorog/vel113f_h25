@@ -2,6 +2,7 @@
 # Import os if NEOS server is used to access solver.
 
 import pyomo.environ as pyo
+import numpy as np
 import os
 
 # define the pyomo model
@@ -43,7 +44,7 @@ def rule_con_cyclic(model, k, j):
         return pyo.Constraint.Skip
 
 
-def rule_con_seq(model, k, j):
+def rule_con_consec(model, k, j):
     # rule function to constrain each power unit k to not run for more than 3 con_sequtive time periods j.
     # this constraint is only needed for the first half of the time periods, i.e. j = 1,...,5
     # as cyclicity takes care of the other half
@@ -109,7 +110,8 @@ def rule_obj_cost(model):
     )
 
     repeat_warm_start_cost = sum(
-        model.w[k, j] * model.start_cost[k]
+        model.w[k, j] 
+        * model.start_cost[k]
         for k in model.power_units
         for j in list(model.time_periods)[5:]
     )
@@ -128,7 +130,7 @@ def rule_obj_cost(model):
         sum(
             model.p[k, j]
             * model.tau[j]
-            for j in model.time_periods
+            for j in list(model.time_periods)[5:]
         )
         * model.running_cost[k]
         for k in model.power_units
@@ -138,46 +140,8 @@ def rule_obj_cost(model):
         running_cost
         + repeat_cold_start_cost
         + repeat_warm_start_cost
-        + initial_cold_start_cost
+        # + initial_cold_start_cost
     )
-
-
-def print_solution(result_model):
-
-    # print model name
-    print(f"Model name: {result_model.name}")
-
-    # print objective function value
-    for obj in result_model.component_objects(pyo.Objective):
-        print(f"Objective name: {obj.name} = {pyo.value(obj)}")
-
-    # print variables and bounds
-    for var in result_model.component_objects(pyo.Var):
-        for idx in var:
-            print(f"Variable name: {var[idx].name}, "
-                  f"value = {pyo.value(var[idx])}, "
-                  f"lower slack = {var[idx].bounds}"
-                  )
-
-    # print constraint function values, slacks, and dual variables
-    for con in result_model.component_objects(pyo.Constraint):
-        for idx in con:
-            # calculate the constraint slack
-            # slack = pyo.value(con[idx].upper) - pyo.value(con[idx].body)
-            print(f"Constraint name: {con[idx].name}, "
-                  f"value = {pyo.value(con[idx])}, "
-                  f"lower slack = {con[idx].lslack()}, "
-                  f"upper slack = {con[idx].uslack()}, "
-                  )
-
-            try:
-                print(f"dual variable = {result_model.dual[con[idx]]}")
-            except:
-                print('Duals are not available. Ensure problem type and/or solver supports dual extraction')
-
-    return result_model
-# =======================================
-
 
 # ======================================
 # SETS
@@ -188,7 +152,7 @@ model.power_units = pyo.Set(
     initialize=['M1', 'M2', 'M3']
 )
 
-# define the set of time periods, for two consequtive schedules of 5 time periods each
+# define the set of time periods, for two consecutive schedules of 5 time periods each
 model.time_periods = pyo.RangeSet(1, 10)
 
 # ======================================
@@ -199,7 +163,7 @@ model.time_periods = pyo.RangeSet(1, 10)
 model.tau = pyo.Param(
     model.time_periods,
     domain=pyo.NonNegativeReals,
-    initialize=5
+    initialize=lambda model, j: 5 if (np.mod(j, 5)!=0) else 4
 )
 
 # start cost of each power unit k
@@ -246,7 +210,7 @@ model.unit_limit_ub = pyo.Param(
     model.power_units,
     initialize={
         'M1': 50,
-        'M2': 40,
+        'M2': 45,
         'M3': 55
     }
 )
@@ -335,11 +299,11 @@ model.con_cyclic = pyo.Constraint(
     rule=rule_con_cyclic
 )
 
-# constraint to ensure no unit runs for more than 3 consequtive time periods
-model.con_seq = pyo.Constraint(
+# constraint to ensure no unit runs for more than 3 consecutive time periods
+model.con_consec = pyo.Constraint(
     model.power_units,
     model.time_periods,
-    rule=rule_con_seq
+    rule=rule_con_consec
 )
 
 # start/stop constraint, lower bound
@@ -393,6 +357,10 @@ solver_path = '/opt/homebrew/opt/glpk/bin/glpsol'  # path to glpk solver on mac 
 opt = pyo.SolverFactory('glpk', executable=solver_path)
 sol_milp = opt.solve(model, tee=False)
 
+# solver_manager = pyo.SolverManagerFactory('neos')
+# os.environ['NEOS_EMAIL'] = 'kristjanor@hi.is'
+# opt = pyo.SolverFactory('cplex')
+# sol_milp = solver_manager.solve(model, opt = opt)
 
 # print output
 sol_milp.write()

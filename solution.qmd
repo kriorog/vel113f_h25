@@ -21,7 +21,7 @@ Our parameters are as follows:
 * $\overbar{p}_k$ is the upper power limit of unit $k$, if it is turned on
 * $\underbar{p}_k$ is the lower power limit of unit $k$, if it is turned on
 
-$x_{k,j}$ is a binary variable describing if machine $k$ is turned on during time period $j$. 
+$x_{k,j}$ is a binary variable describing if machine $k$ is turned on during time period $j$, 1 if on, 0 if off. 
 
 $p_{k,j}$ is a real variable describing the power output of unit $k$ during time period $j$.
 
