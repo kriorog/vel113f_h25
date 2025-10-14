@@ -2,7 +2,6 @@
 # Import os if NEOS server is used to access solver.
 
 import pyomo.environ as pyo
-import numpy as np
 import os
 
 # define the pyomo model
@@ -32,8 +31,8 @@ def rule_param_power_demand(model, j):
 
 
 def rule_con_demand(model, j):
-    # rule function for demand constraint, i.e. total power productions needs to at least meet demand in each time period.
-    return sum(model.p[k, j] for k in model.power_units) >= model.power_demand[j]
+    # rule function for demand constraint, i.e. total power productions needs to equal demand in each time period.
+    return sum(model.p[k, j] for k in model.power_units) == model.power_demand[j]
 
 
 def rule_con_cyclic(model, k, j):
@@ -45,12 +44,15 @@ def rule_con_cyclic(model, k, j):
 
 
 def rule_con_consec(model, k, j):
-    # rule function to constrain each power unit k to not run for more than 3 con_sequtive time periods j.
+    # rule function to constrain each power unit k to not run for more than 3 consecutive time periods j.
     # this constraint is only needed for the first half of the time periods, i.e. j = 1,...,5
     # as cyclicity takes care of the other half
 
+    # number of consecutive periods
+    n_consec = 3
+
     if j <= len(model.time_periods)/2:
-        return sum(model.x[k, j] for j in pyo.RangeSet(j, j + 3)) <= 3
+        return sum(model.x[k, j] for j in pyo.RangeSet(j, j + n_consec)) <= n_consec
     else:
         return pyo.Constraint.Skip
 
@@ -87,10 +89,9 @@ def rule_con_warm_start_ub(model, k, j):
         return model.z[k, j] + model.w[k, j] == 0
 
 
-def rule_obj_cost(model):
-    # rule function for objective function, i.e. minimize total cost of running the power units
-
-    initial_cold_start_cost = sum(
+def rule_obj_init_startcost(model):
+    # rule function for the initial start cost 
+    initial_start_cost = sum(
         (
            1.5 * model.start_cost[k]
         )
@@ -108,25 +109,34 @@ def rule_obj_cost(model):
         )
         for k in model.power_units
     )
+    
+    return initial_start_cost
 
-    repeat_warm_start_cost = sum(
-        model.w[k, j] 
-        * model.start_cost[k]
-        for k in model.power_units
-        for j in list(model.time_periods)[5:]
-    )
-
-    repeat_cold_start_cost = sum(
-        (
-                sum(model.y[k, j] for j in list(model.time_periods)[5:])
-                - sum(model.w[k, j] for j in list(model.time_periods)[5:])
+def rule_obj_rep_startcost(model):
+    # rule function for the repeat start cost (warm+cold) in second schedule
+    rep_warm_start_cost = sum(
+            model.w[k, j] 
+            * model.start_cost[k]
+            for k in model.power_units
+            for j in list(model.time_periods)[5:]
         )
-        * 1.5
-        * model.start_cost[k]
-        for k in model.power_units
-    )
 
-    running_cost = sum(
+    rep_cold_start_cost = sum(
+            (
+                    sum(model.y[k, j] for j in list(model.time_periods)[5:])
+                    - sum(model.w[k, j] for j in list(model.time_periods)[5:])
+            )
+            * 1.5
+            * model.start_cost[k]
+            for k in model.power_units
+        )
+
+    return rep_warm_start_cost + rep_cold_start_cost
+
+
+def rule_obj_rep_runcost(model):
+    # rule function for the repeat running cost of all units in second schedule
+    run_cost = sum(
         sum(
             model.p[k, j]
             * model.tau[j]
@@ -136,12 +146,7 @@ def rule_obj_cost(model):
         for k in model.power_units
     )
 
-    return (
-        running_cost
-        + repeat_cold_start_cost
-        + repeat_warm_start_cost
-        # + initial_cold_start_cost
-    )
+    return run_cost
 
 # ======================================
 # SETS
@@ -335,30 +340,68 @@ model.con_warm_start_lb = pyo.Constraint(
 # OBJECTIVE
 # ======================================
 
+# define repeat running cost function, deactivate this objective
+model.obj_rep_runcost = pyo.Objective(
+    rule=rule_obj_rep_runcost,
+    sense=pyo.minimize,
+)
+model.obj_rep_runcost.deactivate()
+
+# define repeat start cost function, deactivate this objective
+model.obj_rep_startcost = pyo.Objective(
+    rule=rule_obj_rep_startcost,
+    sense=pyo.minimize
+)
+model.obj_rep_startcost.deactivate()
+
+# define initial start cost function, dectivate this objective
+model.obj_init_startcost = pyo.Objective(
+    rule=rule_obj_init_startcost,
+    sense=pyo.minimize
+)
+model.obj_init_startcost.deactivate()
+
 # define objective function to minimize total cost
 model.obj_cost = pyo.Objective(
-    rule=rule_obj_cost,
+    expr=(
+        model.obj_init_startcost.expr
+        +model.obj_rep_startcost.expr 
+        +model.obj_rep_runcost.expr 
+    ),
     sense=pyo.minimize
 )
 
+# ======================================
+# SOLVE THE MILP
+# ======================================
 
 # choose the solver 'cplex' - commercial solver with free academic license - you need to install software from IBM
-solver_path = '/opt/homebrew/opt/glpk/bin/glpsol'  # path to glpk solver on mac using homebrew
+# solver_path = '/opt/homebrew/opt/glpk/bin/glpsol'  # path to glpk solver on mac using homebrew
+solver_path = 'C:\\Program Files (x86)\\glpk-4.65\\w64\\glpsol' # path to glpk solver on windows
+# solver_path = 'C:\\Program Files\\IBM\\ILOG\\CPLEX_Studio_Community2211\\cplex\\bin\\x64_win64\\cplex'
 opt = pyo.SolverFactory('glpk', executable=solver_path)
-sol_milp = opt.solve(model, tee=False)
+sol_milp = opt.solve(model, tee=True)
 
 # solver_manager = pyo.SolverManagerFactory('neos')
-# os.environ['NEOS_EMAIL'] = 'kristjanor@hi.is'
+# os.environ['NEOS_EMAIL'] = '<your email>'
 # opt = pyo.SolverFactory('cplex')
 # sol_milp = solver_manager.solve(model, opt = opt)
 
 # print output
-sol_milp.write()
+print(f'Initial start cost I: {pyo.value(model.obj_init_startcost)} kkr')
+print(f'Repeat start cost S=W+C: {pyo.value(model.obj_rep_startcost)} kkr')
+print(f'Repeat running cost R: {pyo.value(model.obj_rep_runcost)} kkr')
+print(f'Total repeat cost R+S: {
+    pyo.value(model.obj_rep_startcost)
+    + pyo.value(model.obj_rep_runcost)
+    } kkr'
+)
+# sol_milp.write()
 model.pprint()
 
 
 # ==================================================
-# solve relaxed problem to obtain dual variables
+# SOLVE RELAXED LP TO OBTAIN DUAL VARIABLES
 # ==================================================
 
 # fix all integer variables
@@ -372,7 +415,7 @@ model.dual = pyo.Suffix(
     direction=pyo.Suffix.IMPORT_EXPORT
 )
 
-sol_lp = opt.solve(model, tee=True) # for local cplex solver
+sol_lp = opt.solve(model, tee=True) # for local solver
 # sol_lp = solver_manager.solve(model, opt = opt)   # using neos
-sol_milp.write()
+# sol_milp.write()
 model.pprint()

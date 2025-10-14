@@ -1,39 +1,7 @@
-source /Users/kristjanrox/work/vel113f_h25/.venv/bin/activate                                                                                                                                                                                        
-kristjanrox@Kristjans-MacBook-Pro vel113f_h25 % source /Users/kristjanrox/work/vel113f_h25/.venv/bin/activate
-(.venv) kristjanrox@Kristjans-MacBook-Pro vel113f_h25 % /Users/kristjanrox/work/vel113f_h25/.venv/bin/python /Users/kristjanrox/work/vel113f_h25/varme.py
-# ==========================================================
-# = Solver Results                                         =
-# ==========================================================
-# ----------------------------------------------------------
-#   Problem Information
-# ----------------------------------------------------------
-Problem: 
-- Name: unknown
-  Lower bound: 7913.5
-  Upper bound: 7913.5
-  Number of objectives: 1
-  Number of constraints: 250
-  Number of variables: 180
-  Number of nonzeros: 732
-  Sense: minimize
-# ----------------------------------------------------------
-#   Solver Information
-# ----------------------------------------------------------
-Solver: 
-- Status: ok
-  Termination condition: optimal
-  Statistics: 
-    Branch and bound: 
-      Number of bounded subproblems: 203
-      Number of created subproblems: 203
-  Error rc: 0
-  Time: 0.03371596336364746
-# ----------------------------------------------------------
-#   Solution Information
-# ----------------------------------------------------------
-Solution: 
-- number of solutions: 0
-  number of solutions displayed: 0
+Initial start cost I: 15.0 kkr
+Repeat start cost S=W+C: 58.5 kkr
+Repeat running cost R: 3770.0 kkr
+Total repeat cost R+S: 3828.5 kkr
 1 Set Declarations
     power_units : Size=1, Index=None, Ordered=Insertion
         Key  : Dimen : Domain : Size : Members
@@ -73,12 +41,12 @@ Solution:
           2 :     5
           3 :     5
           4 :     5
-          5 :     5
+          5 :     4
           6 :     5
           7 :     5
           8 :     5
           9 :     5
-         10 :     5
+         10 :     4
     unit_limit_lb : Size=3, Index=power_units, Domain=Any, Default=None, Mutable=False
         Key : Value
          M1 :    10
@@ -90,71 +58,39 @@ Solution:
          M2 :    45
          M3 :    55
 
-6 Var Declarations
-    gamma : Size=30, Index=power_units*time_periods
-        Key        : Lower : Value              : Upper : Fixed : Stale : Domain
-         ('M1', 1) :     0 :                1.0 :     1 : False : False : NonNegativeReals
-         ('M1', 2) :     0 :               0.95 :     1 : False : False : NonNegativeReals
-         ('M1', 3) :     0 :                0.0 :     1 : False : False : NonNegativeReals
-         ('M1', 4) :     0 :                0.0 :     1 : False : False : NonNegativeReals
-         ('M1', 5) :     0 :                0.0 :     1 : False : False : NonNegativeReals
-         ('M1', 6) :     0 :                1.0 :     1 : False : False : NonNegativeReals
-         ('M1', 7) :     0 :               0.95 :     1 : False : False : NonNegativeReals
-         ('M1', 8) :     0 :                0.0 :     1 : False : False : NonNegativeReals
-         ('M1', 9) :     0 :                0.0 :     1 : False : False : NonNegativeReals
-        ('M1', 10) :     0 :                0.0 :     1 : False : False : NonNegativeReals
-         ('M2', 1) :     0 :                0.0 :     1 : False : False : NonNegativeReals
-         ('M2', 2) :     0 :                0.0 :     1 : False : False : NonNegativeReals
-         ('M2', 3) :     0 :  0.393939393939394 :     1 : False : False : NonNegativeReals
-         ('M2', 4) :     0 : 0.0909090909090909 :     1 : False : False : NonNegativeReals
-         ('M2', 5) :     0 :                0.0 :     1 : False : False : NonNegativeReals
-         ('M2', 6) :     0 :                0.0 :     1 : False : False : NonNegativeReals
-         ('M2', 7) :     0 :                0.0 :     1 : False : False : NonNegativeReals
-         ('M2', 8) :     0 :  0.393939393939394 :     1 : False : False : NonNegativeReals
-         ('M2', 9) :     0 : 0.0909090909090909 :     1 : False : False : NonNegativeReals
-        ('M2', 10) :     0 :                0.0 :     1 : False : False : NonNegativeReals
-         ('M3', 1) :     0 :                0.0 :     1 : False : False : NonNegativeReals
-         ('M3', 2) :     0 :                0.0 :     1 : False : False : NonNegativeReals
-         ('M3', 3) :     0 :                1.0 :     1 : False : False : NonNegativeReals
-         ('M3', 4) :     0 :                1.0 :     1 : False : False : NonNegativeReals
-         ('M3', 5) :     0 :              0.875 :     1 : False : False : NonNegativeReals
-         ('M3', 6) :     0 :                0.0 :     1 : False : False : NonNegativeReals
-         ('M3', 7) :     0 :                0.0 :     1 : False : False : NonNegativeReals
-         ('M3', 8) :     0 :                1.0 :     1 : False : False : NonNegativeReals
-         ('M3', 9) :     0 :                1.0 :     1 : False : False : NonNegativeReals
-        ('M3', 10) :     0 :              0.875 :     1 : False : False : NonNegativeReals
+5 Var Declarations
     p : Size=30, Index=power_units*time_periods
         Key        : Lower : Value : Upper : Fixed : Stale : Domain
          ('M1', 1) :     0 :  50.0 :  None : False : False : NonNegativeReals
-         ('M1', 2) :     0 :  48.0 :  None : False : False : NonNegativeReals
+         ('M1', 2) :     0 :  10.0 :  None : False : False : NonNegativeReals
          ('M1', 3) :     0 :   0.0 :  None : False : False : NonNegativeReals
          ('M1', 4) :     0 :   0.0 :  None : False : False : NonNegativeReals
-         ('M1', 5) :     0 :  10.0 :  None : False : False : NonNegativeReals
+         ('M1', 5) :     0 :  48.0 :  None : False : False : NonNegativeReals
          ('M1', 6) :     0 :  50.0 :  None : False : False : NonNegativeReals
-         ('M1', 7) :     0 :  48.0 :  None : False : False : NonNegativeReals
+         ('M1', 7) :     0 :  10.0 :  None : False : False : NonNegativeReals
          ('M1', 8) :     0 :   0.0 :  None : False : False : NonNegativeReals
          ('M1', 9) :     0 :   0.0 :  None : False : False : NonNegativeReals
-        ('M1', 10) :     0 :  10.0 :  None : False : False : NonNegativeReals
+        ('M1', 10) :     0 :  48.0 :  None : False : False : NonNegativeReals
          ('M2', 1) :     0 :   0.0 :  None : False : False : NonNegativeReals
-         ('M2', 2) :     0 :  12.0 :  None : False : False : NonNegativeReals
+         ('M2', 2) :     0 :   0.0 :  None : False : False : NonNegativeReals
          ('M2', 3) :     0 :  25.0 :  None : False : False : NonNegativeReals
          ('M2', 4) :     0 :  15.0 :  None : False : False : NonNegativeReals
-         ('M2', 5) :     0 :   0.0 :  None : False : False : NonNegativeReals
+         ('M2', 5) :     0 :  12.0 :  None : False : False : NonNegativeReals
          ('M2', 6) :     0 :   0.0 :  None : False : False : NonNegativeReals
-         ('M2', 7) :     0 :  12.0 :  None : False : False : NonNegativeReals
+         ('M2', 7) :     0 :   0.0 :  None : False : False : NonNegativeReals
          ('M2', 8) :     0 :  25.0 :  None : False : False : NonNegativeReals
          ('M2', 9) :     0 :  15.0 :  None : False : False : NonNegativeReals
-        ('M2', 10) :     0 :   0.0 :  None : False : False : NonNegativeReals
+        ('M2', 10) :     0 :  12.0 :  None : False : False : NonNegativeReals
          ('M3', 1) :     0 :   0.0 :  None : False : False : NonNegativeReals
-         ('M3', 2) :     0 :   0.0 :  None : False : False : NonNegativeReals
+         ('M3', 2) :     0 :  50.0 :  None : False : False : NonNegativeReals
          ('M3', 3) :     0 :  55.0 :  None : False : False : NonNegativeReals
          ('M3', 4) :     0 :  55.0 :  None : False : False : NonNegativeReals
-         ('M3', 5) :     0 :  50.0 :  None : False : False : NonNegativeReals
+         ('M3', 5) :     0 :   0.0 :  None : False : False : NonNegativeReals
          ('M3', 6) :     0 :   0.0 :  None : False : False : NonNegativeReals
-         ('M3', 7) :     0 :   0.0 :  None : False : False : NonNegativeReals
+         ('M3', 7) :     0 :  50.0 :  None : False : False : NonNegativeReals
          ('M3', 8) :     0 :  55.0 :  None : False : False : NonNegativeReals
          ('M3', 9) :     0 :  55.0 :  None : False : False : NonNegativeReals
-        ('M3', 10) :     0 :  50.0 :  None : False : False : NonNegativeReals
+        ('M3', 10) :     0 :   0.0 :  None : False : False : NonNegativeReals
     w : Size=30, Index=power_units*time_periods
         Key        : Lower : Value : Upper : Fixed : Stale : Domain
          ('M1', 1) :     0 :   0.0 :     1 : False : False : Binary
@@ -200,25 +136,25 @@ Solution:
          ('M1', 9) :     0 :   0.0 :     1 : False : False : Binary
         ('M1', 10) :     0 :   1.0 :     1 : False : False : Binary
          ('M2', 1) :     0 :   0.0 :     1 : False : False : Binary
-         ('M2', 2) :     0 :   1.0 :     1 : False : False : Binary
+         ('M2', 2) :     0 :   0.0 :     1 : False : False : Binary
          ('M2', 3) :     0 :   1.0 :     1 : False : False : Binary
          ('M2', 4) :     0 :   1.0 :     1 : False : False : Binary
-         ('M2', 5) :     0 :   0.0 :     1 : False : False : Binary
+         ('M2', 5) :     0 :   1.0 :     1 : False : False : Binary
          ('M2', 6) :     0 :   0.0 :     1 : False : False : Binary
-         ('M2', 7) :     0 :   1.0 :     1 : False : False : Binary
+         ('M2', 7) :     0 :   0.0 :     1 : False : False : Binary
          ('M2', 8) :     0 :   1.0 :     1 : False : False : Binary
          ('M2', 9) :     0 :   1.0 :     1 : False : False : Binary
-        ('M2', 10) :     0 :   0.0 :     1 : False : False : Binary
+        ('M2', 10) :     0 :   1.0 :     1 : False : False : Binary
          ('M3', 1) :     0 :   0.0 :     1 : False : False : Binary
-         ('M3', 2) :     0 :   0.0 :     1 : False : False : Binary
+         ('M3', 2) :     0 :   1.0 :     1 : False : False : Binary
          ('M3', 3) :     0 :   1.0 :     1 : False : False : Binary
          ('M3', 4) :     0 :   1.0 :     1 : False : False : Binary
-         ('M3', 5) :     0 :   1.0 :     1 : False : False : Binary
+         ('M3', 5) :     0 :   0.0 :     1 : False : False : Binary
          ('M3', 6) :     0 :   0.0 :     1 : False : False : Binary
-         ('M3', 7) :     0 :   0.0 :     1 : False : False : Binary
+         ('M3', 7) :     0 :   1.0 :     1 : False : False : Binary
          ('M3', 8) :     0 :   1.0 :     1 : False : False : Binary
          ('M3', 9) :     0 :   1.0 :     1 : False : False : Binary
-        ('M3', 10) :     0 :   1.0 :     1 : False : False : Binary
+        ('M3', 10) :     0 :   0.0 :     1 : False : False : Binary
     y : Size=30, Index=power_units*time_periods
         Key        : Lower : Value : Upper : Fixed : Stale : Domain
          ('M1', 1) :     0 :   1.0 :     1 : False : False : Binary
@@ -232,23 +168,23 @@ Solution:
          ('M1', 9) :     0 :   0.0 :     1 : False : False : Binary
         ('M1', 10) :     0 :   1.0 :     1 : False : False : Binary
          ('M2', 1) :     0 :   0.0 :     1 : False : False : Binary
-         ('M2', 2) :     0 :   1.0 :     1 : False : False : Binary
-         ('M2', 3) :     0 :   0.0 :     1 : False : False : Binary
+         ('M2', 2) :     0 :   0.0 :     1 : False : False : Binary
+         ('M2', 3) :     0 :   1.0 :     1 : False : False : Binary
          ('M2', 4) :     0 :   0.0 :     1 : False : False : Binary
          ('M2', 5) :     0 :   0.0 :     1 : False : False : Binary
          ('M2', 6) :     0 :   0.0 :     1 : False : False : Binary
-         ('M2', 7) :     0 :   1.0 :     1 : False : False : Binary
-         ('M2', 8) :     0 :   0.0 :     1 : False : False : Binary
+         ('M2', 7) :     0 :   0.0 :     1 : False : False : Binary
+         ('M2', 8) :     0 :   1.0 :     1 : False : False : Binary
          ('M2', 9) :     0 :   0.0 :     1 : False : False : Binary
         ('M2', 10) :     0 :   0.0 :     1 : False : False : Binary
          ('M3', 1) :     0 :   0.0 :     1 : False : False : Binary
-         ('M3', 2) :     0 :   0.0 :     1 : False : False : Binary
-         ('M3', 3) :     0 :   1.0 :     1 : False : False : Binary
+         ('M3', 2) :     0 :   1.0 :     1 : False : False : Binary
+         ('M3', 3) :     0 :   0.0 :     1 : False : False : Binary
          ('M3', 4) :     0 :   0.0 :     1 : False : False : Binary
          ('M3', 5) :     0 :   0.0 :     1 : False : False : Binary
          ('M3', 6) :     0 :   0.0 :     1 : False : False : Binary
-         ('M3', 7) :     0 :   0.0 :     1 : False : False : Binary
-         ('M3', 8) :     0 :   1.0 :     1 : False : False : Binary
+         ('M3', 7) :     0 :   1.0 :     1 : False : False : Binary
+         ('M3', 8) :     0 :   0.0 :     1 : False : False : Binary
          ('M3', 9) :     0 :   0.0 :     1 : False : False : Binary
         ('M3', 10) :     0 :   0.0 :     1 : False : False : Binary
     z : Size=30, Index=power_units*time_periods
@@ -267,29 +203,55 @@ Solution:
          ('M2', 2) :     0 :   0.0 :     1 : False : False : Binary
          ('M2', 3) :     0 :   0.0 :     1 : False : False : Binary
          ('M2', 4) :     0 :   0.0 :     1 : False : False : Binary
-         ('M2', 5) :     0 :   1.0 :     1 : False : False : Binary
-         ('M2', 6) :     0 :   0.0 :     1 : False : False : Binary
+         ('M2', 5) :     0 :   0.0 :     1 : False : False : Binary
+         ('M2', 6) :     0 :   1.0 :     1 : False : False : Binary
          ('M2', 7) :     0 :   0.0 :     1 : False : False : Binary
          ('M2', 8) :     0 :   0.0 :     1 : False : False : Binary
          ('M2', 9) :     0 :   0.0 :     1 : False : False : Binary
-        ('M2', 10) :     0 :   1.0 :     1 : False : False : Binary
+        ('M2', 10) :     0 :   0.0 :     1 : False : False : Binary
          ('M3', 1) :     0 :   0.0 :     1 : False : False : Binary
          ('M3', 2) :     0 :   0.0 :     1 : False : False : Binary
          ('M3', 3) :     0 :   0.0 :     1 : False : False : Binary
          ('M3', 4) :     0 :   0.0 :     1 : False : False : Binary
-         ('M3', 5) :     0 :   0.0 :     1 : False : False : Binary
-         ('M3', 6) :     0 :   1.0 :     1 : False : False : Binary
+         ('M3', 5) :     0 :   1.0 :     1 : False : False : Binary
+         ('M3', 6) :     0 :   0.0 :     1 : False : False : Binary
          ('M3', 7) :     0 :   0.0 :     1 : False : False : Binary
          ('M3', 8) :     0 :   0.0 :     1 : False : False : Binary
          ('M3', 9) :     0 :   0.0 :     1 : False : False : Binary
-        ('M3', 10) :     0 :   0.0 :     1 : False : False : Binary
+        ('M3', 10) :     0 :   1.0 :     1 : False : False : Binary
 
-1 Objective Declarations
+4 Objective Declarations
     obj_cost : Size=1, Index=None, Active=True
         Key  : Active : Sense    : Expression
-        None :   True : minimize : (5*p[M1,1] + 5*p[M1,2] + 5*p[M1,3] + 5*p[M1,4] + 5*p[M1,5] + 5*p[M1,6] + 5*p[M1,7] + 5*p[M1,8] + 5*p[M1,9] + 5*p[M1,10])*2.5 + (5*p[M2,1] + 5*p[M2,2] + 5*p[M2,3] + 5*p[M2,4] + 5*p[M2,5] + 5*p[M2,6] + 5*p[M2,7] + 5*p[M2,8] + 5*p[M2,9] + 5*p[M2,10])*2.5 + (5*p[M3,1] + 5*p[M3,2] + 5*p[M3,3] + 5*p[M3,4] + 5*p[M3,5] + 5*p[M3,6] + 5*p[M3,7] + 5*p[M3,8] + 5*p[M3,9] + 5*p[M3,10])*2.4 + (y[M1,6] + y[M1,7] + y[M1,8] + y[M1,9] + y[M1,10] - (w[M1,6] + w[M1,7] + w[M1,8] + w[M1,9] + w[M1,10]))*1.5*10 + (y[M2,6] + y[M2,7] + y[M2,8] + y[M2,9] + y[M2,10] - (w[M2,6] + w[M2,7] + w[M2,8] + w[M2,9] + w[M2,10]))*1.5*13 + (y[M3,6] + y[M3,7] + y[M3,8] + y[M3,9] + y[M3,10] - (w[M3,6] + w[M3,7] + w[M3,8] + w[M3,9] + w[M3,10]))*1.5*16 + (10*w[M1,6] + 10*w[M1,7] + 10*w[M1,8] + 10*w[M1,9] + 10*w[M1,10] + 13*w[M2,6] + 13*w[M2,7] + 13*w[M2,8] + 13*w[M2,9] + 13*w[M2,10] + 16*w[M3,6] + 16*w[M3,7] + 16*w[M3,8] + 16*w[M3,9] + 16*w[M3,10]) + 15.0*(y[M1,1] + y[M1,2] + y[M1,3] + y[M1,4] + y[M1,5] + y[M1,6] - (y[M1,6] + y[M1,7] + y[M1,8] + y[M1,9] + y[M1,10])) + 19.5*(y[M2,1] + y[M2,2] + y[M2,3] + y[M2,4] + y[M2,5] + y[M2,6] - (y[M2,6] + y[M2,7] + y[M2,8] + y[M2,9] + y[M2,10])) + 24.0*(y[M3,1] + y[M3,2] + y[M3,3] + y[M3,4] + y[M3,5] + y[M3,6] - (y[M3,6] + y[M3,7] + y[M3,8] + y[M3,9] + y[M3,10]))
+        None :   True : minimize : 15.0*(y[M1,1] + y[M1,2] + y[M1,3] + y[M1,4] + y[M1,5] + y[M1,6] - (y[M1,6] + y[M1,7] + y[M1,8] + y[M1,9] + y[M1,10])) + 19.5*(y[M2,1] + y[M2,2] + y[M2,3] + y[M2,4] + y[M2,5] + y[M2,6] - (y[M2,6] + y[M2,7] + y[M2,8] + y[M2,9] + y[M2,10])) + 24.0*(y[M3,1] + y[M3,2] + y[M3,3] + y[M3,4] + y[M3,5] + y[M3,6] - (y[M3,6] + y[M3,7] + y[M3,8] + y[M3,9] + y[M3,10])) + (y[M1,6] + y[M1,7] + y[M1,8] + y[M1,9] + y[M1,10] - (w[M1,6] + w[M1,7] + w[M1,8] + w[M1,9] + w[M1,10]))*1.5*10 + (y[M2,6] + y[M2,7] + y[M2,8] + y[M2,9] + y[M2,10] - (w[M2,6] + w[M2,7] + w[M2,8] + w[M2,9] + w[M2,10]))*1.5*13 + (y[M3,6] + y[M3,7] + y[M3,8] + y[M3,9] + y[M3,10] - (w[M3,6] + w[M3,7] + w[M3,8] + w[M3,9] + w[M3,10]))*1.5*16 + (10*w[M1,6] + 10*w[M1,7] + 10*w[M1,8] + 10*w[M1,9] + 10*w[M1,10] + 13*w[M2,6] + 13*w[M2,7] + 13*w[M2,8] + 13*w[M2,9] + 13*w[M2,10] + 16*w[M3,6] + 16*w[M3,7] + 16*w[M3,8] + 16*w[M3,9] + 16*w[M3,10]) + (5*p[M1,6] + 5*p[M1,7] + 5*p[M1,8] + 5*p[M1,9] + 4*p[M1,10])*2.5 + (5*p[M2,6] + 5*p[M2,7] + 5*p[M2,8] + 5*p[M2,9] + 4*p[M2,10])*2.5 + (5*p[M3,6] + 5*p[M3,7] + 5*p[M3,8] + 5*p[M3,9] + 4*p[M3,10])*2.4
+    obj_init_startcost : Size=1, Index=None, Active=False
+        Key  : Active : Sense    : Expression
+        None :  False : minimize : 15.0*(y[M1,1] + y[M1,2] + y[M1,3] + y[M1,4] + y[M1,5] + y[M1,6] - (y[M1,6] + y[M1,7] + y[M1,8] + y[M1,9] + y[M1,10])) + 19.5*(y[M2,1] + y[M2,2] + y[M2,3] + y[M2,4] + y[M2,5] + y[M2,6] - (y[M2,6] + y[M2,7] + y[M2,8] + y[M2,9] + y[M2,10])) + 24.0*(y[M3,1] + y[M3,2] + y[M3,3] + y[M3,4] + y[M3,5] + y[M3,6] - (y[M3,6] + y[M3,7] + y[M3,8] + y[M3,9] + y[M3,10]))  
+    obj_rep_runcost : Size=1, Index=None, Active=False
+        Key  : Active : Sense    : Expression
+        None :  False : minimize : (5*p[M1,6] + 5*p[M1,7] + 5*p[M1,8] + 5*p[M1,9] + 4*p[M1,10])*2.5 + (5*p[M2,6] + 5*p[M2,7] + 5*p[M2,8] + 5*p[M2,9] + 4*p[M2,10])*2.5 + (5*p[M3,6] + 5*p[M3,7] + 5*p[M3,8] + 5*p[M3,9] + 4*p[M3,10])*2.4
+    obj_rep_startcost : Size=1, Index=None, Active=False
+        Key  : Active : Sense    : Expression
+        None :  False : minimize : (y[M1,6] + y[M1,7] + y[M1,8] + y[M1,9] + y[M1,10] - (w[M1,6] + w[M1,7] + w[M1,8] + w[M1,9] + w[M1,10]))*1.5*10 + (y[M2,6] + y[M2,7] + y[M2,8] + y[M2,9] + y[M2,10] - (w[M2,6] + w[M2,7] + w[M2,8] + w[M2,9] + w[M2,10]))*1.5*13 + (y[M3,6] + y[M3,7] + y[M3,8] + y[M3,9] + y[M3,10] - (w[M3,6] + w[M3,7] + w[M3,8] + w[M3,9] + w[M3,10]))*1.5*16 + (10*w[M1,6] + 10*w[M1,7] + 10*w[M1,8] + 10*w[M1,9] + 10*w[M1,10] + 13*w[M2,6] + 13*w[M2,7] + 13*w[M2,8] + 13*w[M2,9] + 13*w[M2,10] + 16*w[M3,6] + 16*w[M3,7] + 16*w[M3,8] + 16*w[M3,9] + 16*w[M3,10])
 
 10 Constraint Declarations
+    con_consec : Size=15, Index=power_units*time_periods, Active=True
+        Key       : Lower : Body                                  : Upper : Active
+        ('M1', 1) :  -Inf : x[M1,1] + x[M1,2] + x[M1,3] + x[M1,4] :   3.0 :   True
+        ('M1', 2) :  -Inf : x[M1,2] + x[M1,3] + x[M1,4] + x[M1,5] :   3.0 :   True
+        ('M1', 3) :  -Inf : x[M1,3] + x[M1,4] + x[M1,5] + x[M1,6] :   3.0 :   True
+        ('M1', 4) :  -Inf : x[M1,4] + x[M1,5] + x[M1,6] + x[M1,7] :   3.0 :   True
+        ('M1', 5) :  -Inf : x[M1,5] + x[M1,6] + x[M1,7] + x[M1,8] :   3.0 :   True
+        ('M2', 1) :  -Inf : x[M2,1] + x[M2,2] + x[M2,3] + x[M2,4] :   3.0 :   True
+        ('M2', 2) :  -Inf : x[M2,2] + x[M2,3] + x[M2,4] + x[M2,5] :   3.0 :   True
+        ('M2', 3) :  -Inf : x[M2,3] + x[M2,4] + x[M2,5] + x[M2,6] :   3.0 :   True
+        ('M2', 4) :  -Inf : x[M2,4] + x[M2,5] + x[M2,6] + x[M2,7] :   3.0 :   True
+        ('M2', 5) :  -Inf : x[M2,5] + x[M2,6] + x[M2,7] + x[M2,8] :   3.0 :   True
+        ('M3', 1) :  -Inf : x[M3,1] + x[M3,2] + x[M3,3] + x[M3,4] :   3.0 :   True
+        ('M3', 2) :  -Inf : x[M3,2] + x[M3,3] + x[M3,4] + x[M3,5] :   3.0 :   True
+        ('M3', 3) :  -Inf : x[M3,3] + x[M3,4] + x[M3,5] + x[M3,6] :   3.0 :   True
+        ('M3', 4) :  -Inf : x[M3,4] + x[M3,5] + x[M3,6] + x[M3,7] :   3.0 :   True
+        ('M3', 5) :  -Inf : x[M3,5] + x[M3,6] + x[M3,7] + x[M3,8] :   3.0 :   True
     con_cyclic : Size=15, Index=power_units*time_periods, Active=True
         Key       : Lower : Body               : Upper : Active
         ('M1', 1) :   0.0 :  p[M1,1] - p[M1,6] :   0.0 :   True
@@ -309,65 +271,80 @@ Solution:
         ('M3', 5) :   0.0 : p[M3,5] - p[M3,10] :   0.0 :   True
     con_demand : Size=10, Index=time_periods, Active=True
         Key : Lower : Body                           : Upper : Active
-          1 :  50.0 :    p[M1,1] + p[M2,1] + p[M3,1] :  +Inf :   True
-          2 :  60.0 :    p[M1,2] + p[M2,2] + p[M3,2] :  +Inf :   True
-          3 :  80.0 :    p[M1,3] + p[M2,3] + p[M3,3] :  +Inf :   True
-          4 :  70.0 :    p[M1,4] + p[M2,4] + p[M3,4] :  +Inf :   True
-          5 :  60.0 :    p[M1,5] + p[M2,5] + p[M3,5] :  +Inf :   True
-          6 :  50.0 :    p[M1,6] + p[M2,6] + p[M3,6] :  +Inf :   True
-          7 :  60.0 :    p[M1,7] + p[M2,7] + p[M3,7] :  +Inf :   True
-          8 :  80.0 :    p[M1,8] + p[M2,8] + p[M3,8] :  +Inf :   True
-          9 :  70.0 :    p[M1,9] + p[M2,9] + p[M3,9] :  +Inf :   True
-         10 :  60.0 : p[M1,10] + p[M2,10] + p[M3,10] :  +Inf :   True
-    con_gamma : Size=30, Index=power_units*time_periods, Active=True
-        Key        : Lower : Body                    : Upper : Active
-         ('M1', 1) :  -Inf :   gamma[M1,1] - x[M1,1] :   0.0 :   True
-         ('M1', 2) :  -Inf :   gamma[M1,2] - x[M1,2] :   0.0 :   True
-         ('M1', 3) :  -Inf :   gamma[M1,3] - x[M1,3] :   0.0 :   True
-         ('M1', 4) :  -Inf :   gamma[M1,4] - x[M1,4] :   0.0 :   True
-         ('M1', 5) :  -Inf :   gamma[M1,5] - x[M1,5] :   0.0 :   True
-         ('M1', 6) :  -Inf :   gamma[M1,6] - x[M1,6] :   0.0 :   True
-         ('M1', 7) :  -Inf :   gamma[M1,7] - x[M1,7] :   0.0 :   True
-         ('M1', 8) :  -Inf :   gamma[M1,8] - x[M1,8] :   0.0 :   True
-         ('M1', 9) :  -Inf :   gamma[M1,9] - x[M1,9] :   0.0 :   True
-        ('M1', 10) :  -Inf : gamma[M1,10] - x[M1,10] :   0.0 :   True
-         ('M2', 1) :  -Inf :   gamma[M2,1] - x[M2,1] :   0.0 :   True
-         ('M2', 2) :  -Inf :   gamma[M2,2] - x[M2,2] :   0.0 :   True
-         ('M2', 3) :  -Inf :   gamma[M2,3] - x[M2,3] :   0.0 :   True
-         ('M2', 4) :  -Inf :   gamma[M2,4] - x[M2,4] :   0.0 :   True
-         ('M2', 5) :  -Inf :   gamma[M2,5] - x[M2,5] :   0.0 :   True
-         ('M2', 6) :  -Inf :   gamma[M2,6] - x[M2,6] :   0.0 :   True
-         ('M2', 7) :  -Inf :   gamma[M2,7] - x[M2,7] :   0.0 :   True
-         ('M2', 8) :  -Inf :   gamma[M2,8] - x[M2,8] :   0.0 :   True
-         ('M2', 9) :  -Inf :   gamma[M2,9] - x[M2,9] :   0.0 :   True
-        ('M2', 10) :  -Inf : gamma[M2,10] - x[M2,10] :   0.0 :   True
-         ('M3', 1) :  -Inf :   gamma[M3,1] - x[M3,1] :   0.0 :   True
-         ('M3', 2) :  -Inf :   gamma[M3,2] - x[M3,2] :   0.0 :   True
-         ('M3', 3) :  -Inf :   gamma[M3,3] - x[M3,3] :   0.0 :   True
-         ('M3', 4) :  -Inf :   gamma[M3,4] - x[M3,4] :   0.0 :   True
-         ('M3', 5) :  -Inf :   gamma[M3,5] - x[M3,5] :   0.0 :   True
-         ('M3', 6) :  -Inf :   gamma[M3,6] - x[M3,6] :   0.0 :   True
-         ('M3', 7) :  -Inf :   gamma[M3,7] - x[M3,7] :   0.0 :   True
-         ('M3', 8) :  -Inf :   gamma[M3,8] - x[M3,8] :   0.0 :   True
-         ('M3', 9) :  -Inf :   gamma[M3,9] - x[M3,9] :   0.0 :   True
-        ('M3', 10) :  -Inf : gamma[M3,10] - x[M3,10] :   0.0 :   True
-    con_seq : Size=15, Index=power_units*time_periods, Active=True
-        Key       : Lower : Body                                  : Upper : Active
-        ('M1', 1) :  -Inf : x[M1,1] + x[M1,2] + x[M1,3] + x[M1,4] :   3.0 :   True
-        ('M1', 2) :  -Inf : x[M1,2] + x[M1,3] + x[M1,4] + x[M1,5] :   3.0 :   True
-        ('M1', 3) :  -Inf : x[M1,3] + x[M1,4] + x[M1,5] + x[M1,6] :   3.0 :   True
-        ('M1', 4) :  -Inf : x[M1,4] + x[M1,5] + x[M1,6] + x[M1,7] :   3.0 :   True
-        ('M1', 5) :  -Inf : x[M1,5] + x[M1,6] + x[M1,7] + x[M1,8] :   3.0 :   True
-        ('M2', 1) :  -Inf : x[M2,1] + x[M2,2] + x[M2,3] + x[M2,4] :   3.0 :   True
-        ('M2', 2) :  -Inf : x[M2,2] + x[M2,3] + x[M2,4] + x[M2,5] :   3.0 :   True
-        ('M2', 3) :  -Inf : x[M2,3] + x[M2,4] + x[M2,5] + x[M2,6] :   3.0 :   True
-        ('M2', 4) :  -Inf : x[M2,4] + x[M2,5] + x[M2,6] + x[M2,7] :   3.0 :   True
-        ('M2', 5) :  -Inf : x[M2,5] + x[M2,6] + x[M2,7] + x[M2,8] :   3.0 :   True
-        ('M3', 1) :  -Inf : x[M3,1] + x[M3,2] + x[M3,3] + x[M3,4] :   3.0 :   True
-        ('M3', 2) :  -Inf : x[M3,2] + x[M3,3] + x[M3,4] + x[M3,5] :   3.0 :   True
-        ('M3', 3) :  -Inf : x[M3,3] + x[M3,4] + x[M3,5] + x[M3,6] :   3.0 :   True
-        ('M3', 4) :  -Inf : x[M3,4] + x[M3,5] + x[M3,6] + x[M3,7] :   3.0 :   True
-        ('M3', 5) :  -Inf : x[M3,5] + x[M3,6] + x[M3,7] + x[M3,8] :   3.0 :   True
+          1 :  50.0 :    p[M1,1] + p[M2,1] + p[M3,1] :  50.0 :   True
+          2 :  60.0 :    p[M1,2] + p[M2,2] + p[M3,2] :  60.0 :   True
+          3 :  80.0 :    p[M1,3] + p[M2,3] + p[M3,3] :  80.0 :   True
+          4 :  70.0 :    p[M1,4] + p[M2,4] + p[M3,4] :  70.0 :   True
+          5 :  60.0 :    p[M1,5] + p[M2,5] + p[M3,5] :  60.0 :   True
+          6 :  50.0 :    p[M1,6] + p[M2,6] + p[M3,6] :  50.0 :   True
+          7 :  60.0 :    p[M1,7] + p[M2,7] + p[M3,7] :  60.0 :   True
+          8 :  80.0 :    p[M1,8] + p[M2,8] + p[M3,8] :  80.0 :   True
+          9 :  70.0 :    p[M1,9] + p[M2,9] + p[M3,9] :  70.0 :   True
+         10 :  60.0 : p[M1,10] + p[M2,10] + p[M3,10] :  60.0 :   True
+    con_load_lb : Size=30, Index=power_units*time_periods, Active=True
+        Key        : Lower : Body                   : Upper : Active
+         ('M1', 1) :  -Inf :   10*x[M1,1] - p[M1,1] :   0.0 :   True
+         ('M1', 2) :  -Inf :   10*x[M1,2] - p[M1,2] :   0.0 :   True
+         ('M1', 3) :  -Inf :   10*x[M1,3] - p[M1,3] :   0.0 :   True
+         ('M1', 4) :  -Inf :   10*x[M1,4] - p[M1,4] :   0.0 :   True
+         ('M1', 5) :  -Inf :   10*x[M1,5] - p[M1,5] :   0.0 :   True
+         ('M1', 6) :  -Inf :   10*x[M1,6] - p[M1,6] :   0.0 :   True
+         ('M1', 7) :  -Inf :   10*x[M1,7] - p[M1,7] :   0.0 :   True
+         ('M1', 8) :  -Inf :   10*x[M1,8] - p[M1,8] :   0.0 :   True
+         ('M1', 9) :  -Inf :   10*x[M1,9] - p[M1,9] :   0.0 :   True
+        ('M1', 10) :  -Inf : 10*x[M1,10] - p[M1,10] :   0.0 :   True
+         ('M2', 1) :  -Inf :   12*x[M2,1] - p[M2,1] :   0.0 :   True
+         ('M2', 2) :  -Inf :   12*x[M2,2] - p[M2,2] :   0.0 :   True
+         ('M2', 3) :  -Inf :   12*x[M2,3] - p[M2,3] :   0.0 :   True
+         ('M2', 4) :  -Inf :   12*x[M2,4] - p[M2,4] :   0.0 :   True
+         ('M2', 5) :  -Inf :   12*x[M2,5] - p[M2,5] :   0.0 :   True
+         ('M2', 6) :  -Inf :   12*x[M2,6] - p[M2,6] :   0.0 :   True
+         ('M2', 7) :  -Inf :   12*x[M2,7] - p[M2,7] :   0.0 :   True
+         ('M2', 8) :  -Inf :   12*x[M2,8] - p[M2,8] :   0.0 :   True
+         ('M2', 9) :  -Inf :   12*x[M2,9] - p[M2,9] :   0.0 :   True
+        ('M2', 10) :  -Inf : 12*x[M2,10] - p[M2,10] :   0.0 :   True
+         ('M3', 1) :  -Inf :   15*x[M3,1] - p[M3,1] :   0.0 :   True
+         ('M3', 2) :  -Inf :   15*x[M3,2] - p[M3,2] :   0.0 :   True
+         ('M3', 3) :  -Inf :   15*x[M3,3] - p[M3,3] :   0.0 :   True
+         ('M3', 4) :  -Inf :   15*x[M3,4] - p[M3,4] :   0.0 :   True
+         ('M3', 5) :  -Inf :   15*x[M3,5] - p[M3,5] :   0.0 :   True
+         ('M3', 6) :  -Inf :   15*x[M3,6] - p[M3,6] :   0.0 :   True
+         ('M3', 7) :  -Inf :   15*x[M3,7] - p[M3,7] :   0.0 :   True
+         ('M3', 8) :  -Inf :   15*x[M3,8] - p[M3,8] :   0.0 :   True
+         ('M3', 9) :  -Inf :   15*x[M3,9] - p[M3,9] :   0.0 :   True
+        ('M3', 10) :  -Inf : 15*x[M3,10] - p[M3,10] :   0.0 :   True
+    con_load_ub : Size=30, Index=power_units*time_periods, Active=True
+        Key        : Lower : Body                   : Upper : Active
+         ('M1', 1) :  -Inf :   p[M1,1] - 50*x[M1,1] :   0.0 :   True
+         ('M1', 2) :  -Inf :   p[M1,2] - 50*x[M1,2] :   0.0 :   True
+         ('M1', 3) :  -Inf :   p[M1,3] - 50*x[M1,3] :   0.0 :   True
+         ('M1', 4) :  -Inf :   p[M1,4] - 50*x[M1,4] :   0.0 :   True
+         ('M1', 5) :  -Inf :   p[M1,5] - 50*x[M1,5] :   0.0 :   True
+         ('M1', 6) :  -Inf :   p[M1,6] - 50*x[M1,6] :   0.0 :   True
+         ('M1', 7) :  -Inf :   p[M1,7] - 50*x[M1,7] :   0.0 :   True
+         ('M1', 8) :  -Inf :   p[M1,8] - 50*x[M1,8] :   0.0 :   True
+         ('M1', 9) :  -Inf :   p[M1,9] - 50*x[M1,9] :   0.0 :   True
+        ('M1', 10) :  -Inf : p[M1,10] - 50*x[M1,10] :   0.0 :   True
+         ('M2', 1) :  -Inf :   p[M2,1] - 45*x[M2,1] :   0.0 :   True
+         ('M2', 2) :  -Inf :   p[M2,2] - 45*x[M2,2] :   0.0 :   True
+         ('M2', 3) :  -Inf :   p[M2,3] - 45*x[M2,3] :   0.0 :   True
+         ('M2', 4) :  -Inf :   p[M2,4] - 45*x[M2,4] :   0.0 :   True
+         ('M2', 5) :  -Inf :   p[M2,5] - 45*x[M2,5] :   0.0 :   True
+         ('M2', 6) :  -Inf :   p[M2,6] - 45*x[M2,6] :   0.0 :   True
+         ('M2', 7) :  -Inf :   p[M2,7] - 45*x[M2,7] :   0.0 :   True
+         ('M2', 8) :  -Inf :   p[M2,8] - 45*x[M2,8] :   0.0 :   True
+         ('M2', 9) :  -Inf :   p[M2,9] - 45*x[M2,9] :   0.0 :   True
+        ('M2', 10) :  -Inf : p[M2,10] - 45*x[M2,10] :   0.0 :   True
+         ('M3', 1) :  -Inf :   p[M3,1] - 55*x[M3,1] :   0.0 :   True
+         ('M3', 2) :  -Inf :   p[M3,2] - 55*x[M3,2] :   0.0 :   True
+         ('M3', 3) :  -Inf :   p[M3,3] - 55*x[M3,3] :   0.0 :   True
+         ('M3', 4) :  -Inf :   p[M3,4] - 55*x[M3,4] :   0.0 :   True
+         ('M3', 5) :  -Inf :   p[M3,5] - 55*x[M3,5] :   0.0 :   True
+         ('M3', 6) :  -Inf :   p[M3,6] - 55*x[M3,6] :   0.0 :   True
+         ('M3', 7) :  -Inf :   p[M3,7] - 55*x[M3,7] :   0.0 :   True
+         ('M3', 8) :  -Inf :   p[M3,8] - 55*x[M3,8] :   0.0 :   True
+         ('M3', 9) :  -Inf :   p[M3,9] - 55*x[M3,9] :   0.0 :   True
+        ('M3', 10) :  -Inf : p[M3,10] - 55*x[M3,10] :   0.0 :   True
     con_start_criteria : Size=30, Index=power_units*time_periods, Active=True
         Key        : Lower : Body                : Upper : Active
          ('M1', 1) :  -Inf :   y[M1,1] + z[M1,1] :   1.0 :   True
@@ -464,38 +441,6 @@ Solution:
          ('M3', 8) :  -Inf :    x[M3,8] - x[M3,7] - (1 - z[M3,8] - (1 - y[M3,8])) :   0.0 :   True
          ('M3', 9) :  -Inf :    x[M3,9] - x[M3,8] - (1 - z[M3,9] - (1 - y[M3,9])) :   0.0 :   True
         ('M3', 10) :  -Inf : x[M3,10] - x[M3,9] - (1 - z[M3,10] - (1 - y[M3,10])) :   0.0 :   True
-    con_unit_load : Size=30, Index=power_units*time_periods, Active=True
-        Key        : Lower : Body                                       : Upper : Active
-         ('M1', 1) :   0.0 :    p[M1,1] - (10*x[M1,1] + 40*gamma[M1,1]) :   0.0 :   True
-         ('M1', 2) :   0.0 :    p[M1,2] - (10*x[M1,2] + 40*gamma[M1,2]) :   0.0 :   True
-         ('M1', 3) :   0.0 :    p[M1,3] - (10*x[M1,3] + 40*gamma[M1,3]) :   0.0 :   True
-         ('M1', 4) :   0.0 :    p[M1,4] - (10*x[M1,4] + 40*gamma[M1,4]) :   0.0 :   True
-         ('M1', 5) :   0.0 :    p[M1,5] - (10*x[M1,5] + 40*gamma[M1,5]) :   0.0 :   True
-         ('M1', 6) :   0.0 :    p[M1,6] - (10*x[M1,6] + 40*gamma[M1,6]) :   0.0 :   True
-         ('M1', 7) :   0.0 :    p[M1,7] - (10*x[M1,7] + 40*gamma[M1,7]) :   0.0 :   True
-         ('M1', 8) :   0.0 :    p[M1,8] - (10*x[M1,8] + 40*gamma[M1,8]) :   0.0 :   True
-         ('M1', 9) :   0.0 :    p[M1,9] - (10*x[M1,9] + 40*gamma[M1,9]) :   0.0 :   True
-        ('M1', 10) :   0.0 : p[M1,10] - (10*x[M1,10] + 40*gamma[M1,10]) :   0.0 :   True
-         ('M2', 1) :   0.0 :    p[M2,1] - (12*x[M2,1] + 33*gamma[M2,1]) :   0.0 :   True
-         ('M2', 2) :   0.0 :    p[M2,2] - (12*x[M2,2] + 33*gamma[M2,2]) :   0.0 :   True
-         ('M2', 3) :   0.0 :    p[M2,3] - (12*x[M2,3] + 33*gamma[M2,3]) :   0.0 :   True
-         ('M2', 4) :   0.0 :    p[M2,4] - (12*x[M2,4] + 33*gamma[M2,4]) :   0.0 :   True
-         ('M2', 5) :   0.0 :    p[M2,5] - (12*x[M2,5] + 33*gamma[M2,5]) :   0.0 :   True
-         ('M2', 6) :   0.0 :    p[M2,6] - (12*x[M2,6] + 33*gamma[M2,6]) :   0.0 :   True
-         ('M2', 7) :   0.0 :    p[M2,7] - (12*x[M2,7] + 33*gamma[M2,7]) :   0.0 :   True
-         ('M2', 8) :   0.0 :    p[M2,8] - (12*x[M2,8] + 33*gamma[M2,8]) :   0.0 :   True
-         ('M2', 9) :   0.0 :    p[M2,9] - (12*x[M2,9] + 33*gamma[M2,9]) :   0.0 :   True
-        ('M2', 10) :   0.0 : p[M2,10] - (12*x[M2,10] + 33*gamma[M2,10]) :   0.0 :   True
-         ('M3', 1) :   0.0 :    p[M3,1] - (15*x[M3,1] + 40*gamma[M3,1]) :   0.0 :   True
-         ('M3', 2) :   0.0 :    p[M3,2] - (15*x[M3,2] + 40*gamma[M3,2]) :   0.0 :   True
-         ('M3', 3) :   0.0 :    p[M3,3] - (15*x[M3,3] + 40*gamma[M3,3]) :   0.0 :   True
-         ('M3', 4) :   0.0 :    p[M3,4] - (15*x[M3,4] + 40*gamma[M3,4]) :   0.0 :   True
-         ('M3', 5) :   0.0 :    p[M3,5] - (15*x[M3,5] + 40*gamma[M3,5]) :   0.0 :   True
-         ('M3', 6) :   0.0 :    p[M3,6] - (15*x[M3,6] + 40*gamma[M3,6]) :   0.0 :   True
-         ('M3', 7) :   0.0 :    p[M3,7] - (15*x[M3,7] + 40*gamma[M3,7]) :   0.0 :   True
-         ('M3', 8) :   0.0 :    p[M3,8] - (15*x[M3,8] + 40*gamma[M3,8]) :   0.0 :   True
-         ('M3', 9) :   0.0 :    p[M3,9] - (15*x[M3,9] + 40*gamma[M3,9]) :   0.0 :   True
-        ('M3', 10) :   0.0 : p[M3,10] - (15*x[M3,10] + 40*gamma[M3,10]) :   0.0 :   True
     con_warm_start_lb : Size=30, Index=power_units*time_periods, Active=True
         Key        : Lower : Body                              : Upper : Active
          ('M1', 1) :   0.0 :                 z[M1,1] + w[M1,1] :   0.0 :   True
@@ -561,67 +506,32 @@ Solution:
          ('M3', 9) :  -Inf :    z[M3,8] + y[M3,9] - (1 - w[M3,9] + 2*w[M3,9]) :   0.0 :   True
         ('M3', 10) :  -Inf : z[M3,9] + y[M3,10] - (1 - w[M3,10] + 2*w[M3,10]) :   0.0 :   True
 
-25 Declarations: power_units time_periods tau start_cost running_cost power_demand unit_limit_lb unit_limit_ub x gamma p y z w con_gamma con_unit_load con_demand con_cyclic con_seq con_start_lb con_start_ub con_start_criteria con_warm_start_ub con_warm_start_lb obj_cost
-GLPSOL--GLPK LP/MIP Solver 5.0
+27 Declarations: power_units time_periods tau start_cost running_cost power_demand unit_limit_lb unit_limit_ub x p y z w con_load_ub con_load_lb con_demand con_cyclic con_consec con_start_lb con_start_ub con_start_criteria con_warm_start_ub con_warm_start_lb obj_rep_runcost obj_rep_startcost obj_init_startcost obj_cost
+GLPSOL: GLPK LP/MIP Solver, v4.65
 Parameter(s) specified in the command line:
- --write /var/folders/fm/tyfx5jgj0cq3mfsr9qm69xcc0000gn/T/tmpwradheve.glpk.raw
- --wglp /var/folders/fm/tyfx5jgj0cq3mfsr9qm69xcc0000gn/T/tmpaldeqv3d.glpk.glp
- --cpxlp /var/folders/fm/tyfx5jgj0cq3mfsr9qm69xcc0000gn/T/tmpob3p3ndu.pyomo.lp
-Reading problem data from '/var/folders/fm/tyfx5jgj0cq3mfsr9qm69xcc0000gn/T/tmpob3p3ndu.pyomo.lp'...
-250 rows, 61 columns, 150 non-zeros
-1166 lines were read
-Writing problem data to '/var/folders/fm/tyfx5jgj0cq3mfsr9qm69xcc0000gn/T/tmpaldeqv3d.glpk.glp'...
-743 lines were written
-GLPK Simplex Optimizer 5.0
-250 rows, 61 columns, 150 non-zeros
+ --write C:\Users\KRISTJ~1\AppData\Local\Temp\tmp619khr8l.glpk.raw --wglp
+ C:\Users\KRISTJ~1\AppData\Local\Temp\tmpmiy0ezdb.glpk.glp --cpxlp C:\Users\KRISTJ~1\AppData\Local\Temp\tmppbmnc_b_.pyomo.lp
+Reading problem data from 'C:\Users\KRISTJ~1\AppData\Local\Temp\tmppbmnc_b_.pyomo.lp'...
+250 rows, 31 columns, 120 non-zeros
+1091 lines were read
+Writing problem data to 'C:\Users\KRISTJ~1\AppData\Local\Temp\tmpmiy0ezdb.glpk.glp'...
+650 lines were written
+GLPK Simplex Optimizer, v4.65
+250 rows, 31 columns, 120 non-zeros
 Preprocessing...
 16 rows, 16 columns, 32 non-zeros
 Scaling...
  A: min|aij| =  1.000e+00  max|aij| =  1.000e+00  ratio =  1.000e+00
 Problem data seem to be well scaled
 Constructing initial basis...
-Size of triangular part is 16
-      0: obj =   3.803500000e+03 inf =   3.380e+02 (8)
-      6: obj =   7.998500000e+03 inf =   0.000e+00 (0)
-*     9: obj =   7.913500000e+03 inf =   0.000e+00 (0)
+Size of triangular part is 12
+      0: obj =   3.835500000e+03 inf =   4.200e+01 (6)
+      3: obj =   3.843500000e+03 inf =   0.000e+00 (0)
 OPTIMAL LP SOLUTION FOUND
 Time used:   0.0 secs
-Memory used: 0.1 Mb (124500 bytes)
-Writing basic solution to '/var/folders/fm/tyfx5jgj0cq3mfsr9qm69xcc0000gn/T/tmpwradheve.glpk.raw'...
-320 lines were written
-# ==========================================================
-# = Solver Results                                         =
-# ==========================================================
-# ----------------------------------------------------------
-#   Problem Information
-# ----------------------------------------------------------
-Problem: 
-- Name: unknown
-  Lower bound: 7913.5
-  Upper bound: 7913.5
-  Number of objectives: 1
-  Number of constraints: 250
-  Number of variables: 180
-  Number of nonzeros: 732
-  Sense: minimize
-# ----------------------------------------------------------
-#   Solver Information
-# ----------------------------------------------------------
-Solver: 
-- Status: ok
-  Termination condition: optimal
-  Statistics: 
-    Branch and bound: 
-      Number of bounded subproblems: 203
-      Number of created subproblems: 203
-  Error rc: 0
-  Time: 0.03371596336364746
-# ----------------------------------------------------------
-#   Solution Information
-# ----------------------------------------------------------
-Solution: 
-- number of solutions: 0
-  number of solutions displayed: 0
+Memory used: 0.1 Mb (116468 bytes)
+Writing basic solution to 'C:\Users\KRISTJ~1\AppData\Local\Temp\tmp619khr8l.glpk.raw'...
+290 lines were written
 1 Set Declarations
     power_units : Size=1, Index=None, Ordered=Insertion
         Key  : Dimen : Domain : Size : Members
@@ -661,12 +571,12 @@ Solution:
           2 :     5
           3 :     5
           4 :     5
-          5 :     5
+          5 :     4
           6 :     5
           7 :     5
           8 :     5
           9 :     5
-         10 :     5
+         10 :     4
     unit_limit_lb : Size=3, Index=power_units, Domain=Any, Default=None, Mutable=False
         Key : Value
          M1 :    10
@@ -678,71 +588,39 @@ Solution:
          M2 :    45
          M3 :    55
 
-6 Var Declarations
-    gamma : Size=30, Index=power_units*time_periods
-        Key        : Lower : Value              : Upper : Fixed : Stale : Domain
-         ('M1', 1) :     0 :                1.0 :     1 : False : False : NonNegativeReals
-         ('M1', 2) :     0 :               0.95 :     1 : False : False : NonNegativeReals
-         ('M1', 3) :     0 :                0.0 :     1 : False : False : NonNegativeReals
-         ('M1', 4) :     0 :                0.0 :     1 : False : False : NonNegativeReals
-         ('M1', 5) :     0 :                0.0 :     1 : False : False : NonNegativeReals
-         ('M1', 6) :     0 :                1.0 :     1 : False : False : NonNegativeReals
-         ('M1', 7) :     0 :               0.95 :     1 : False : False : NonNegativeReals
-         ('M1', 8) :     0 :                0.0 :     1 : False : False : NonNegativeReals
-         ('M1', 9) :     0 :                0.0 :     1 : False : False : NonNegativeReals
-        ('M1', 10) :     0 :               -0.0 :     1 : False : False : NonNegativeReals
-         ('M2', 1) :     0 :                0.0 :     1 : False : False : NonNegativeReals
-         ('M2', 2) :     0 :                0.0 :     1 : False : False : NonNegativeReals
-         ('M2', 3) :     0 :  0.393939393939394 :     1 : False : False : NonNegativeReals
-         ('M2', 4) :     0 : 0.0909090909090909 :     1 : False : False : NonNegativeReals
-         ('M2', 5) :     0 :                0.0 :     1 : False : False : NonNegativeReals
-         ('M2', 6) :     0 :                0.0 :     1 : False : False : NonNegativeReals
-         ('M2', 7) :     0 :               -0.0 :     1 : False : False : NonNegativeReals
-         ('M2', 8) :     0 :  0.393939393939394 :     1 : False : False : NonNegativeReals
-         ('M2', 9) :     0 : 0.0909090909090909 :     1 : False : False : NonNegativeReals
-        ('M2', 10) :     0 :                0.0 :     1 : False : False : NonNegativeReals
-         ('M3', 1) :     0 :                0.0 :     1 : False : False : NonNegativeReals
-         ('M3', 2) :     0 :                0.0 :     1 : False : False : NonNegativeReals
-         ('M3', 3) :     0 :                1.0 :     1 : False : False : NonNegativeReals
-         ('M3', 4) :     0 :                1.0 :     1 : False : False : NonNegativeReals
-         ('M3', 5) :     0 :              0.875 :     1 : False : False : NonNegativeReals
-         ('M3', 6) :     0 :                0.0 :     1 : False : False : NonNegativeReals
-         ('M3', 7) :     0 :                0.0 :     1 : False : False : NonNegativeReals
-         ('M3', 8) :     0 :                1.0 :     1 : False : False : NonNegativeReals
-         ('M3', 9) :     0 :                1.0 :     1 : False : False : NonNegativeReals
-        ('M3', 10) :     0 :              0.875 :     1 : False : False : NonNegativeReals
+5 Var Declarations
     p : Size=30, Index=power_units*time_periods
         Key        : Lower : Value : Upper : Fixed : Stale : Domain
          ('M1', 1) :     0 :  50.0 :  None : False : False : NonNegativeReals
-         ('M1', 2) :     0 :  48.0 :  None : False : False : NonNegativeReals
+         ('M1', 2) :     0 :  10.0 :  None : False : False : NonNegativeReals
          ('M1', 3) :     0 :   0.0 :  None : False : False : NonNegativeReals
          ('M1', 4) :     0 :   0.0 :  None : False : False : NonNegativeReals
-         ('M1', 5) :     0 :  10.0 :  None : False : False : NonNegativeReals
+         ('M1', 5) :     0 :  15.0 :  None : False : False : NonNegativeReals
          ('M1', 6) :     0 :  50.0 :  None : False : False : NonNegativeReals
-         ('M1', 7) :     0 :  48.0 :  None : False : False : NonNegativeReals
+         ('M1', 7) :     0 :  10.0 :  None : False : False : NonNegativeReals
          ('M1', 8) :     0 :   0.0 :  None : False : False : NonNegativeReals
          ('M1', 9) :     0 :   0.0 :  None : False : False : NonNegativeReals
-        ('M1', 10) :     0 :  10.0 :  None : False : False : NonNegativeReals
+        ('M1', 10) :     0 :  15.0 :  None : False : False : NonNegativeReals
          ('M2', 1) :     0 :   0.0 :  None : False : False : NonNegativeReals
-         ('M2', 2) :     0 :  12.0 :  None : False : False : NonNegativeReals
+         ('M2', 2) :     0 :   0.0 :  None : False : False : NonNegativeReals
          ('M2', 3) :     0 :  25.0 :  None : False : False : NonNegativeReals
          ('M2', 4) :     0 :  15.0 :  None : False : False : NonNegativeReals
-         ('M2', 5) :     0 :   0.0 :  None : False : False : NonNegativeReals
+         ('M2', 5) :     0 :  45.0 :  None : False : False : NonNegativeReals
          ('M2', 6) :     0 :   0.0 :  None : False : False : NonNegativeReals
-         ('M2', 7) :     0 :  12.0 :  None : False : False : NonNegativeReals
+         ('M2', 7) :     0 :   0.0 :  None : False : False : NonNegativeReals
          ('M2', 8) :     0 :  25.0 :  None : False : False : NonNegativeReals
          ('M2', 9) :     0 :  15.0 :  None : False : False : NonNegativeReals
-        ('M2', 10) :     0 :   0.0 :  None : False : False : NonNegativeReals
+        ('M2', 10) :     0 :  45.0 :  None : False : False : NonNegativeReals
          ('M3', 1) :     0 :   0.0 :  None : False : False : NonNegativeReals
-         ('M3', 2) :     0 :   0.0 :  None : False : False : NonNegativeReals
+         ('M3', 2) :     0 :  50.0 :  None : False : False : NonNegativeReals
          ('M3', 3) :     0 :  55.0 :  None : False : False : NonNegativeReals
          ('M3', 4) :     0 :  55.0 :  None : False : False : NonNegativeReals
-         ('M3', 5) :     0 :  50.0 :  None : False : False : NonNegativeReals
+         ('M3', 5) :     0 :   0.0 :  None : False : False : NonNegativeReals
          ('M3', 6) :     0 :   0.0 :  None : False : False : NonNegativeReals
-         ('M3', 7) :     0 :   0.0 :  None : False : False : NonNegativeReals
+         ('M3', 7) :     0 :  50.0 :  None : False : False : NonNegativeReals
          ('M3', 8) :     0 :  55.0 :  None : False : False : NonNegativeReals
          ('M3', 9) :     0 :  55.0 :  None : False : False : NonNegativeReals
-        ('M3', 10) :     0 :  50.0 :  None : False : False : NonNegativeReals
+        ('M3', 10) :     0 :   0.0 :  None : False : False : NonNegativeReals
     w : Size=30, Index=power_units*time_periods
         Key        : Lower : Value : Upper : Fixed : Stale : Domain
          ('M1', 1) :     0 :   0.0 :     1 :  True :  True : Binary
@@ -788,25 +666,25 @@ Solution:
          ('M1', 9) :     0 :   0.0 :     1 :  True :  True : Binary
         ('M1', 10) :     0 :   1.0 :     1 :  True :  True : Binary
          ('M2', 1) :     0 :   0.0 :     1 :  True :  True : Binary
-         ('M2', 2) :     0 :   1.0 :     1 :  True :  True : Binary
+         ('M2', 2) :     0 :   0.0 :     1 :  True :  True : Binary
          ('M2', 3) :     0 :   1.0 :     1 :  True :  True : Binary
          ('M2', 4) :     0 :   1.0 :     1 :  True :  True : Binary
-         ('M2', 5) :     0 :   0.0 :     1 :  True :  True : Binary
+         ('M2', 5) :     0 :   1.0 :     1 :  True :  True : Binary
          ('M2', 6) :     0 :   0.0 :     1 :  True :  True : Binary
-         ('M2', 7) :     0 :   1.0 :     1 :  True :  True : Binary
+         ('M2', 7) :     0 :   0.0 :     1 :  True :  True : Binary
          ('M2', 8) :     0 :   1.0 :     1 :  True :  True : Binary
          ('M2', 9) :     0 :   1.0 :     1 :  True :  True : Binary
-        ('M2', 10) :     0 :   0.0 :     1 :  True :  True : Binary
+        ('M2', 10) :     0 :   1.0 :     1 :  True :  True : Binary
          ('M3', 1) :     0 :   0.0 :     1 :  True :  True : Binary
-         ('M3', 2) :     0 :   0.0 :     1 :  True :  True : Binary
+         ('M3', 2) :     0 :   1.0 :     1 :  True :  True : Binary
          ('M3', 3) :     0 :   1.0 :     1 :  True :  True : Binary
          ('M3', 4) :     0 :   1.0 :     1 :  True :  True : Binary
-         ('M3', 5) :     0 :   1.0 :     1 :  True :  True : Binary
+         ('M3', 5) :     0 :   0.0 :     1 :  True :  True : Binary
          ('M3', 6) :     0 :   0.0 :     1 :  True :  True : Binary
-         ('M3', 7) :     0 :   0.0 :     1 :  True :  True : Binary
+         ('M3', 7) :     0 :   1.0 :     1 :  True :  True : Binary
          ('M3', 8) :     0 :   1.0 :     1 :  True :  True : Binary
          ('M3', 9) :     0 :   1.0 :     1 :  True :  True : Binary
-        ('M3', 10) :     0 :   1.0 :     1 :  True :  True : Binary
+        ('M3', 10) :     0 :   0.0 :     1 :  True :  True : Binary
     y : Size=30, Index=power_units*time_periods
         Key        : Lower : Value : Upper : Fixed : Stale : Domain
          ('M1', 1) :     0 :   1.0 :     1 :  True :  True : Binary
@@ -820,23 +698,23 @@ Solution:
          ('M1', 9) :     0 :   0.0 :     1 :  True :  True : Binary
         ('M1', 10) :     0 :   1.0 :     1 :  True :  True : Binary
          ('M2', 1) :     0 :   0.0 :     1 :  True :  True : Binary
-         ('M2', 2) :     0 :   1.0 :     1 :  True :  True : Binary
-         ('M2', 3) :     0 :   0.0 :     1 :  True :  True : Binary
+         ('M2', 2) :     0 :   0.0 :     1 :  True :  True : Binary
+         ('M2', 3) :     0 :   1.0 :     1 :  True :  True : Binary
          ('M2', 4) :     0 :   0.0 :     1 :  True :  True : Binary
          ('M2', 5) :     0 :   0.0 :     1 :  True :  True : Binary
          ('M2', 6) :     0 :   0.0 :     1 :  True :  True : Binary
-         ('M2', 7) :     0 :   1.0 :     1 :  True :  True : Binary
-         ('M2', 8) :     0 :   0.0 :     1 :  True :  True : Binary
+         ('M2', 7) :     0 :   0.0 :     1 :  True :  True : Binary
+         ('M2', 8) :     0 :   1.0 :     1 :  True :  True : Binary
          ('M2', 9) :     0 :   0.0 :     1 :  True :  True : Binary
         ('M2', 10) :     0 :   0.0 :     1 :  True :  True : Binary
          ('M3', 1) :     0 :   0.0 :     1 :  True :  True : Binary
-         ('M3', 2) :     0 :   0.0 :     1 :  True :  True : Binary
-         ('M3', 3) :     0 :   1.0 :     1 :  True :  True : Binary
+         ('M3', 2) :     0 :   1.0 :     1 :  True :  True : Binary
+         ('M3', 3) :     0 :   0.0 :     1 :  True :  True : Binary
          ('M3', 4) :     0 :   0.0 :     1 :  True :  True : Binary
          ('M3', 5) :     0 :   0.0 :     1 :  True :  True : Binary
          ('M3', 6) :     0 :   0.0 :     1 :  True :  True : Binary
-         ('M3', 7) :     0 :   0.0 :     1 :  True :  True : Binary
-         ('M3', 8) :     0 :   1.0 :     1 :  True :  True : Binary
+         ('M3', 7) :     0 :   1.0 :     1 :  True :  True : Binary
+         ('M3', 8) :     0 :   0.0 :     1 :  True :  True : Binary
          ('M3', 9) :     0 :   0.0 :     1 :  True :  True : Binary
         ('M3', 10) :     0 :   0.0 :     1 :  True :  True : Binary
     z : Size=30, Index=power_units*time_periods
@@ -855,29 +733,55 @@ Solution:
          ('M2', 2) :     0 :   0.0 :     1 :  True :  True : Binary
          ('M2', 3) :     0 :   0.0 :     1 :  True :  True : Binary
          ('M2', 4) :     0 :   0.0 :     1 :  True :  True : Binary
-         ('M2', 5) :     0 :   1.0 :     1 :  True :  True : Binary
-         ('M2', 6) :     0 :   0.0 :     1 :  True :  True : Binary
+         ('M2', 5) :     0 :   0.0 :     1 :  True :  True : Binary
+         ('M2', 6) :     0 :   1.0 :     1 :  True :  True : Binary
          ('M2', 7) :     0 :   0.0 :     1 :  True :  True : Binary
          ('M2', 8) :     0 :   0.0 :     1 :  True :  True : Binary
          ('M2', 9) :     0 :   0.0 :     1 :  True :  True : Binary
-        ('M2', 10) :     0 :   1.0 :     1 :  True :  True : Binary
+        ('M2', 10) :     0 :   0.0 :     1 :  True :  True : Binary
          ('M3', 1) :     0 :   0.0 :     1 :  True :  True : Binary
          ('M3', 2) :     0 :   0.0 :     1 :  True :  True : Binary
          ('M3', 3) :     0 :   0.0 :     1 :  True :  True : Binary
          ('M3', 4) :     0 :   0.0 :     1 :  True :  True : Binary
-         ('M3', 5) :     0 :   0.0 :     1 :  True :  True : Binary
-         ('M3', 6) :     0 :   1.0 :     1 :  True :  True : Binary
+         ('M3', 5) :     0 :   1.0 :     1 :  True :  True : Binary
+         ('M3', 6) :     0 :   0.0 :     1 :  True :  True : Binary
          ('M3', 7) :     0 :   0.0 :     1 :  True :  True : Binary
          ('M3', 8) :     0 :   0.0 :     1 :  True :  True : Binary
          ('M3', 9) :     0 :   0.0 :     1 :  True :  True : Binary
-        ('M3', 10) :     0 :   0.0 :     1 :  True :  True : Binary
+        ('M3', 10) :     0 :   1.0 :     1 :  True :  True : Binary
 
-1 Objective Declarations
+4 Objective Declarations
     obj_cost : Size=1, Index=None, Active=True
         Key  : Active : Sense    : Expression
-        None :   True : minimize : (5*p[M1,1] + 5*p[M1,2] + 5*p[M1,3] + 5*p[M1,4] + 5*p[M1,5] + 5*p[M1,6] + 5*p[M1,7] + 5*p[M1,8] + 5*p[M1,9] + 5*p[M1,10])*2.5 + (5*p[M2,1] + 5*p[M2,2] + 5*p[M2,3] + 5*p[M2,4] + 5*p[M2,5] + 5*p[M2,6] + 5*p[M2,7] + 5*p[M2,8] + 5*p[M2,9] + 5*p[M2,10])*2.5 + (5*p[M3,1] + 5*p[M3,2] + 5*p[M3,3] + 5*p[M3,4] + 5*p[M3,5] + 5*p[M3,6] + 5*p[M3,7] + 5*p[M3,8] + 5*p[M3,9] + 5*p[M3,10])*2.4 + (y[M1,6] + y[M1,7] + y[M1,8] + y[M1,9] + y[M1,10] - (w[M1,6] + w[M1,7] + w[M1,8] + w[M1,9] + w[M1,10]))*1.5*10 + (y[M2,6] + y[M2,7] + y[M2,8] + y[M2,9] + y[M2,10] - (w[M2,6] + w[M2,7] + w[M2,8] + w[M2,9] + w[M2,10]))*1.5*13 + (y[M3,6] + y[M3,7] + y[M3,8] + y[M3,9] + y[M3,10] - (w[M3,6] + w[M3,7] + w[M3,8] + w[M3,9] + w[M3,10]))*1.5*16 + (10*w[M1,6] + 10*w[M1,7] + 10*w[M1,8] + 10*w[M1,9] + 10*w[M1,10] + 13*w[M2,6] + 13*w[M2,7] + 13*w[M2,8] + 13*w[M2,9] + 13*w[M2,10] + 16*w[M3,6] + 16*w[M3,7] + 16*w[M3,8] + 16*w[M3,9] + 16*w[M3,10]) + 15.0*(y[M1,1] + y[M1,2] + y[M1,3] + y[M1,4] + y[M1,5] + y[M1,6] - (y[M1,6] + y[M1,7] + y[M1,8] + y[M1,9] + y[M1,10])) + 19.5*(y[M2,1] + y[M2,2] + y[M2,3] + y[M2,4] + y[M2,5] + y[M2,6] - (y[M2,6] + y[M2,7] + y[M2,8] + y[M2,9] + y[M2,10])) + 24.0*(y[M3,1] + y[M3,2] + y[M3,3] + y[M3,4] + y[M3,5] + y[M3,6] - (y[M3,6] + y[M3,7] + y[M3,8] + y[M3,9] + y[M3,10]))
+        None :   True : minimize : 15.0*(y[M1,1] + y[M1,2] + y[M1,3] + y[M1,4] + y[M1,5] + y[M1,6] - (y[M1,6] + y[M1,7] + y[M1,8] + y[M1,9] + y[M1,10])) + 19.5*(y[M2,1] + y[M2,2] + y[M2,3] + y[M2,4] + y[M2,5] + y[M2,6] - (y[M2,6] + y[M2,7] + y[M2,8] + y[M2,9] + y[M2,10])) + 24.0*(y[M3,1] + y[M3,2] + y[M3,3] + y[M3,4] + y[M3,5] + y[M3,6] - (y[M3,6] + y[M3,7] + y[M3,8] + y[M3,9] + y[M3,10])) + (y[M1,6] + y[M1,7] + y[M1,8] + y[M1,9] + y[M1,10] - (w[M1,6] + w[M1,7] + w[M1,8] + w[M1,9] + w[M1,10]))*1.5*10 + (y[M2,6] + y[M2,7] + y[M2,8] + y[M2,9] + y[M2,10] - (w[M2,6] + w[M2,7] + w[M2,8] + w[M2,9] + w[M2,10]))*1.5*13 + (y[M3,6] + y[M3,7] + y[M3,8] + y[M3,9] + y[M3,10] - (w[M3,6] + w[M3,7] + w[M3,8] + w[M3,9] + w[M3,10]))*1.5*16 + (10*w[M1,6] + 10*w[M1,7] + 10*w[M1,8] + 10*w[M1,9] + 10*w[M1,10] + 13*w[M2,6] + 13*w[M2,7] + 13*w[M2,8] + 13*w[M2,9] + 13*w[M2,10] + 16*w[M3,6] + 16*w[M3,7] + 16*w[M3,8] + 16*w[M3,9] + 16*w[M3,10]) + (5*p[M1,6] + 5*p[M1,7] + 5*p[M1,8] + 5*p[M1,9] + 4*p[M1,10])*2.5 + (5*p[M2,6] + 5*p[M2,7] + 5*p[M2,8] + 5*p[M2,9] + 4*p[M2,10])*2.5 + (5*p[M3,6] + 5*p[M3,7] + 5*p[M3,8] + 5*p[M3,9] + 4*p[M3,10])*2.4
+    obj_init_startcost : Size=1, Index=None, Active=False
+        Key  : Active : Sense    : Expression
+        None :  False : minimize : 15.0*(y[M1,1] + y[M1,2] + y[M1,3] + y[M1,4] + y[M1,5] + y[M1,6] - (y[M1,6] + y[M1,7] + y[M1,8] + y[M1,9] + y[M1,10])) + 19.5*(y[M2,1] + y[M2,2] + y[M2,3] + y[M2,4] + y[M2,5] + y[M2,6] - (y[M2,6] + y[M2,7] + y[M2,8] + y[M2,9] + y[M2,10])) + 24.0*(y[M3,1] + y[M3,2] + y[M3,3] + y[M3,4] + y[M3,5] + y[M3,6] - (y[M3,6] + y[M3,7] + y[M3,8] + y[M3,9] + y[M3,10]))  
+    obj_rep_runcost : Size=1, Index=None, Active=False
+        Key  : Active : Sense    : Expression
+        None :  False : minimize : (5*p[M1,6] + 5*p[M1,7] + 5*p[M1,8] + 5*p[M1,9] + 4*p[M1,10])*2.5 + (5*p[M2,6] + 5*p[M2,7] + 5*p[M2,8] + 5*p[M2,9] + 4*p[M2,10])*2.5 + (5*p[M3,6] + 5*p[M3,7] + 5*p[M3,8] + 5*p[M3,9] + 4*p[M3,10])*2.4
+    obj_rep_startcost : Size=1, Index=None, Active=False
+        Key  : Active : Sense    : Expression
+        None :  False : minimize : (y[M1,6] + y[M1,7] + y[M1,8] + y[M1,9] + y[M1,10] - (w[M1,6] + w[M1,7] + w[M1,8] + w[M1,9] + w[M1,10]))*1.5*10 + (y[M2,6] + y[M2,7] + y[M2,8] + y[M2,9] + y[M2,10] - (w[M2,6] + w[M2,7] + w[M2,8] + w[M2,9] + w[M2,10]))*1.5*13 + (y[M3,6] + y[M3,7] + y[M3,8] + y[M3,9] + y[M3,10] - (w[M3,6] + w[M3,7] + w[M3,8] + w[M3,9] + w[M3,10]))*1.5*16 + (10*w[M1,6] + 10*w[M1,7] + 10*w[M1,8] + 10*w[M1,9] + 10*w[M1,10] + 13*w[M2,6] + 13*w[M2,7] + 13*w[M2,8] + 13*w[M2,9] + 13*w[M2,10] + 16*w[M3,6] + 16*w[M3,7] + 16*w[M3,8] + 16*w[M3,9] + 16*w[M3,10])
 
 10 Constraint Declarations
+    con_consec : Size=15, Index=power_units*time_periods, Active=True
+        Key       : Lower : Body                                  : Upper : Active
+        ('M1', 1) :  -Inf : x[M1,1] + x[M1,2] + x[M1,3] + x[M1,4] :   3.0 :   True
+        ('M1', 2) :  -Inf : x[M1,2] + x[M1,3] + x[M1,4] + x[M1,5] :   3.0 :   True
+        ('M1', 3) :  -Inf : x[M1,3] + x[M1,4] + x[M1,5] + x[M1,6] :   3.0 :   True
+        ('M1', 4) :  -Inf : x[M1,4] + x[M1,5] + x[M1,6] + x[M1,7] :   3.0 :   True
+        ('M1', 5) :  -Inf : x[M1,5] + x[M1,6] + x[M1,7] + x[M1,8] :   3.0 :   True
+        ('M2', 1) :  -Inf : x[M2,1] + x[M2,2] + x[M2,3] + x[M2,4] :   3.0 :   True
+        ('M2', 2) :  -Inf : x[M2,2] + x[M2,3] + x[M2,4] + x[M2,5] :   3.0 :   True
+        ('M2', 3) :  -Inf : x[M2,3] + x[M2,4] + x[M2,5] + x[M2,6] :   3.0 :   True
+        ('M2', 4) :  -Inf : x[M2,4] + x[M2,5] + x[M2,6] + x[M2,7] :   3.0 :   True
+        ('M2', 5) :  -Inf : x[M2,5] + x[M2,6] + x[M2,7] + x[M2,8] :   3.0 :   True
+        ('M3', 1) :  -Inf : x[M3,1] + x[M3,2] + x[M3,3] + x[M3,4] :   3.0 :   True
+        ('M3', 2) :  -Inf : x[M3,2] + x[M3,3] + x[M3,4] + x[M3,5] :   3.0 :   True
+        ('M3', 3) :  -Inf : x[M3,3] + x[M3,4] + x[M3,5] + x[M3,6] :   3.0 :   True
+        ('M3', 4) :  -Inf : x[M3,4] + x[M3,5] + x[M3,6] + x[M3,7] :   3.0 :   True
+        ('M3', 5) :  -Inf : x[M3,5] + x[M3,6] + x[M3,7] + x[M3,8] :   3.0 :   True
     con_cyclic : Size=15, Index=power_units*time_periods, Active=True
         Key       : Lower : Body               : Upper : Active
         ('M1', 1) :   0.0 :  p[M1,1] - p[M1,6] :   0.0 :   True
@@ -897,65 +801,80 @@ Solution:
         ('M3', 5) :   0.0 : p[M3,5] - p[M3,10] :   0.0 :   True
     con_demand : Size=10, Index=time_periods, Active=True
         Key : Lower : Body                           : Upper : Active
-          1 :  50.0 :    p[M1,1] + p[M2,1] + p[M3,1] :  +Inf :   True
-          2 :  60.0 :    p[M1,2] + p[M2,2] + p[M3,2] :  +Inf :   True
-          3 :  80.0 :    p[M1,3] + p[M2,3] + p[M3,3] :  +Inf :   True
-          4 :  70.0 :    p[M1,4] + p[M2,4] + p[M3,4] :  +Inf :   True
-          5 :  60.0 :    p[M1,5] + p[M2,5] + p[M3,5] :  +Inf :   True
-          6 :  50.0 :    p[M1,6] + p[M2,6] + p[M3,6] :  +Inf :   True
-          7 :  60.0 :    p[M1,7] + p[M2,7] + p[M3,7] :  +Inf :   True
-          8 :  80.0 :    p[M1,8] + p[M2,8] + p[M3,8] :  +Inf :   True
-          9 :  70.0 :    p[M1,9] + p[M2,9] + p[M3,9] :  +Inf :   True
-         10 :  60.0 : p[M1,10] + p[M2,10] + p[M3,10] :  +Inf :   True
-    con_gamma : Size=30, Index=power_units*time_periods, Active=True
-        Key        : Lower : Body                    : Upper : Active
-         ('M1', 1) :  -Inf :   gamma[M1,1] - x[M1,1] :   0.0 :   True
-         ('M1', 2) :  -Inf :   gamma[M1,2] - x[M1,2] :   0.0 :   True
-         ('M1', 3) :  -Inf :   gamma[M1,3] - x[M1,3] :   0.0 :   True
-         ('M1', 4) :  -Inf :   gamma[M1,4] - x[M1,4] :   0.0 :   True
-         ('M1', 5) :  -Inf :   gamma[M1,5] - x[M1,5] :   0.0 :   True
-         ('M1', 6) :  -Inf :   gamma[M1,6] - x[M1,6] :   0.0 :   True
-         ('M1', 7) :  -Inf :   gamma[M1,7] - x[M1,7] :   0.0 :   True
-         ('M1', 8) :  -Inf :   gamma[M1,8] - x[M1,8] :   0.0 :   True
-         ('M1', 9) :  -Inf :   gamma[M1,9] - x[M1,9] :   0.0 :   True
-        ('M1', 10) :  -Inf : gamma[M1,10] - x[M1,10] :   0.0 :   True
-         ('M2', 1) :  -Inf :   gamma[M2,1] - x[M2,1] :   0.0 :   True
-         ('M2', 2) :  -Inf :   gamma[M2,2] - x[M2,2] :   0.0 :   True
-         ('M2', 3) :  -Inf :   gamma[M2,3] - x[M2,3] :   0.0 :   True
-         ('M2', 4) :  -Inf :   gamma[M2,4] - x[M2,4] :   0.0 :   True
-         ('M2', 5) :  -Inf :   gamma[M2,5] - x[M2,5] :   0.0 :   True
-         ('M2', 6) :  -Inf :   gamma[M2,6] - x[M2,6] :   0.0 :   True
-         ('M2', 7) :  -Inf :   gamma[M2,7] - x[M2,7] :   0.0 :   True
-         ('M2', 8) :  -Inf :   gamma[M2,8] - x[M2,8] :   0.0 :   True
-         ('M2', 9) :  -Inf :   gamma[M2,9] - x[M2,9] :   0.0 :   True
-        ('M2', 10) :  -Inf : gamma[M2,10] - x[M2,10] :   0.0 :   True
-         ('M3', 1) :  -Inf :   gamma[M3,1] - x[M3,1] :   0.0 :   True
-         ('M3', 2) :  -Inf :   gamma[M3,2] - x[M3,2] :   0.0 :   True
-         ('M3', 3) :  -Inf :   gamma[M3,3] - x[M3,3] :   0.0 :   True
-         ('M3', 4) :  -Inf :   gamma[M3,4] - x[M3,4] :   0.0 :   True
-         ('M3', 5) :  -Inf :   gamma[M3,5] - x[M3,5] :   0.0 :   True
-         ('M3', 6) :  -Inf :   gamma[M3,6] - x[M3,6] :   0.0 :   True
-         ('M3', 7) :  -Inf :   gamma[M3,7] - x[M3,7] :   0.0 :   True
-         ('M3', 8) :  -Inf :   gamma[M3,8] - x[M3,8] :   0.0 :   True
-         ('M3', 9) :  -Inf :   gamma[M3,9] - x[M3,9] :   0.0 :   True
-        ('M3', 10) :  -Inf : gamma[M3,10] - x[M3,10] :   0.0 :   True
-    con_seq : Size=15, Index=power_units*time_periods, Active=True
-        Key       : Lower : Body                                  : Upper : Active
-        ('M1', 1) :  -Inf : x[M1,1] + x[M1,2] + x[M1,3] + x[M1,4] :   3.0 :   True
-        ('M1', 2) :  -Inf : x[M1,2] + x[M1,3] + x[M1,4] + x[M1,5] :   3.0 :   True
-        ('M1', 3) :  -Inf : x[M1,3] + x[M1,4] + x[M1,5] + x[M1,6] :   3.0 :   True
-        ('M1', 4) :  -Inf : x[M1,4] + x[M1,5] + x[M1,6] + x[M1,7] :   3.0 :   True
-        ('M1', 5) :  -Inf : x[M1,5] + x[M1,6] + x[M1,7] + x[M1,8] :   3.0 :   True
-        ('M2', 1) :  -Inf : x[M2,1] + x[M2,2] + x[M2,3] + x[M2,4] :   3.0 :   True
-        ('M2', 2) :  -Inf : x[M2,2] + x[M2,3] + x[M2,4] + x[M2,5] :   3.0 :   True
-        ('M2', 3) :  -Inf : x[M2,3] + x[M2,4] + x[M2,5] + x[M2,6] :   3.0 :   True
-        ('M2', 4) :  -Inf : x[M2,4] + x[M2,5] + x[M2,6] + x[M2,7] :   3.0 :   True
-        ('M2', 5) :  -Inf : x[M2,5] + x[M2,6] + x[M2,7] + x[M2,8] :   3.0 :   True
-        ('M3', 1) :  -Inf : x[M3,1] + x[M3,2] + x[M3,3] + x[M3,4] :   3.0 :   True
-        ('M3', 2) :  -Inf : x[M3,2] + x[M3,3] + x[M3,4] + x[M3,5] :   3.0 :   True
-        ('M3', 3) :  -Inf : x[M3,3] + x[M3,4] + x[M3,5] + x[M3,6] :   3.0 :   True
-        ('M3', 4) :  -Inf : x[M3,4] + x[M3,5] + x[M3,6] + x[M3,7] :   3.0 :   True
-        ('M3', 5) :  -Inf : x[M3,5] + x[M3,6] + x[M3,7] + x[M3,8] :   3.0 :   True
+          1 :  50.0 :    p[M1,1] + p[M2,1] + p[M3,1] :  50.0 :   True
+          2 :  60.0 :    p[M1,2] + p[M2,2] + p[M3,2] :  60.0 :   True
+          3 :  80.0 :    p[M1,3] + p[M2,3] + p[M3,3] :  80.0 :   True
+          4 :  70.0 :    p[M1,4] + p[M2,4] + p[M3,4] :  70.0 :   True
+          5 :  60.0 :    p[M1,5] + p[M2,5] + p[M3,5] :  60.0 :   True
+          6 :  50.0 :    p[M1,6] + p[M2,6] + p[M3,6] :  50.0 :   True
+          7 :  60.0 :    p[M1,7] + p[M2,7] + p[M3,7] :  60.0 :   True
+          8 :  80.0 :    p[M1,8] + p[M2,8] + p[M3,8] :  80.0 :   True
+          9 :  70.0 :    p[M1,9] + p[M2,9] + p[M3,9] :  70.0 :   True
+         10 :  60.0 : p[M1,10] + p[M2,10] + p[M3,10] :  60.0 :   True
+    con_load_lb : Size=30, Index=power_units*time_periods, Active=True
+        Key        : Lower : Body                   : Upper : Active
+         ('M1', 1) :  -Inf :   10*x[M1,1] - p[M1,1] :   0.0 :   True
+         ('M1', 2) :  -Inf :   10*x[M1,2] - p[M1,2] :   0.0 :   True
+         ('M1', 3) :  -Inf :   10*x[M1,3] - p[M1,3] :   0.0 :   True
+         ('M1', 4) :  -Inf :   10*x[M1,4] - p[M1,4] :   0.0 :   True
+         ('M1', 5) :  -Inf :   10*x[M1,5] - p[M1,5] :   0.0 :   True
+         ('M1', 6) :  -Inf :   10*x[M1,6] - p[M1,6] :   0.0 :   True
+         ('M1', 7) :  -Inf :   10*x[M1,7] - p[M1,7] :   0.0 :   True
+         ('M1', 8) :  -Inf :   10*x[M1,8] - p[M1,8] :   0.0 :   True
+         ('M1', 9) :  -Inf :   10*x[M1,9] - p[M1,9] :   0.0 :   True
+        ('M1', 10) :  -Inf : 10*x[M1,10] - p[M1,10] :   0.0 :   True
+         ('M2', 1) :  -Inf :   12*x[M2,1] - p[M2,1] :   0.0 :   True
+         ('M2', 2) :  -Inf :   12*x[M2,2] - p[M2,2] :   0.0 :   True
+         ('M2', 3) :  -Inf :   12*x[M2,3] - p[M2,3] :   0.0 :   True
+         ('M2', 4) :  -Inf :   12*x[M2,4] - p[M2,4] :   0.0 :   True
+         ('M2', 5) :  -Inf :   12*x[M2,5] - p[M2,5] :   0.0 :   True
+         ('M2', 6) :  -Inf :   12*x[M2,6] - p[M2,6] :   0.0 :   True
+         ('M2', 7) :  -Inf :   12*x[M2,7] - p[M2,7] :   0.0 :   True
+         ('M2', 8) :  -Inf :   12*x[M2,8] - p[M2,8] :   0.0 :   True
+         ('M2', 9) :  -Inf :   12*x[M2,9] - p[M2,9] :   0.0 :   True
+        ('M2', 10) :  -Inf : 12*x[M2,10] - p[M2,10] :   0.0 :   True
+         ('M3', 1) :  -Inf :   15*x[M3,1] - p[M3,1] :   0.0 :   True
+         ('M3', 2) :  -Inf :   15*x[M3,2] - p[M3,2] :   0.0 :   True
+         ('M3', 3) :  -Inf :   15*x[M3,3] - p[M3,3] :   0.0 :   True
+         ('M3', 4) :  -Inf :   15*x[M3,4] - p[M3,4] :   0.0 :   True
+         ('M3', 5) :  -Inf :   15*x[M3,5] - p[M3,5] :   0.0 :   True
+         ('M3', 6) :  -Inf :   15*x[M3,6] - p[M3,6] :   0.0 :   True
+         ('M3', 7) :  -Inf :   15*x[M3,7] - p[M3,7] :   0.0 :   True
+         ('M3', 8) :  -Inf :   15*x[M3,8] - p[M3,8] :   0.0 :   True
+         ('M3', 9) :  -Inf :   15*x[M3,9] - p[M3,9] :   0.0 :   True
+        ('M3', 10) :  -Inf : 15*x[M3,10] - p[M3,10] :   0.0 :   True
+    con_load_ub : Size=30, Index=power_units*time_periods, Active=True
+        Key        : Lower : Body                   : Upper : Active
+         ('M1', 1) :  -Inf :   p[M1,1] - 50*x[M1,1] :   0.0 :   True
+         ('M1', 2) :  -Inf :   p[M1,2] - 50*x[M1,2] :   0.0 :   True
+         ('M1', 3) :  -Inf :   p[M1,3] - 50*x[M1,3] :   0.0 :   True
+         ('M1', 4) :  -Inf :   p[M1,4] - 50*x[M1,4] :   0.0 :   True
+         ('M1', 5) :  -Inf :   p[M1,5] - 50*x[M1,5] :   0.0 :   True
+         ('M1', 6) :  -Inf :   p[M1,6] - 50*x[M1,6] :   0.0 :   True
+         ('M1', 7) :  -Inf :   p[M1,7] - 50*x[M1,7] :   0.0 :   True
+         ('M1', 8) :  -Inf :   p[M1,8] - 50*x[M1,8] :   0.0 :   True
+         ('M1', 9) :  -Inf :   p[M1,9] - 50*x[M1,9] :   0.0 :   True
+        ('M1', 10) :  -Inf : p[M1,10] - 50*x[M1,10] :   0.0 :   True
+         ('M2', 1) :  -Inf :   p[M2,1] - 45*x[M2,1] :   0.0 :   True
+         ('M2', 2) :  -Inf :   p[M2,2] - 45*x[M2,2] :   0.0 :   True
+         ('M2', 3) :  -Inf :   p[M2,3] - 45*x[M2,3] :   0.0 :   True
+         ('M2', 4) :  -Inf :   p[M2,4] - 45*x[M2,4] :   0.0 :   True
+         ('M2', 5) :  -Inf :   p[M2,5] - 45*x[M2,5] :   0.0 :   True
+         ('M2', 6) :  -Inf :   p[M2,6] - 45*x[M2,6] :   0.0 :   True
+         ('M2', 7) :  -Inf :   p[M2,7] - 45*x[M2,7] :   0.0 :   True
+         ('M2', 8) :  -Inf :   p[M2,8] - 45*x[M2,8] :   0.0 :   True
+         ('M2', 9) :  -Inf :   p[M2,9] - 45*x[M2,9] :   0.0 :   True
+        ('M2', 10) :  -Inf : p[M2,10] - 45*x[M2,10] :   0.0 :   True
+         ('M3', 1) :  -Inf :   p[M3,1] - 55*x[M3,1] :   0.0 :   True
+         ('M3', 2) :  -Inf :   p[M3,2] - 55*x[M3,2] :   0.0 :   True
+         ('M3', 3) :  -Inf :   p[M3,3] - 55*x[M3,3] :   0.0 :   True
+         ('M3', 4) :  -Inf :   p[M3,4] - 55*x[M3,4] :   0.0 :   True
+         ('M3', 5) :  -Inf :   p[M3,5] - 55*x[M3,5] :   0.0 :   True
+         ('M3', 6) :  -Inf :   p[M3,6] - 55*x[M3,6] :   0.0 :   True
+         ('M3', 7) :  -Inf :   p[M3,7] - 55*x[M3,7] :   0.0 :   True
+         ('M3', 8) :  -Inf :   p[M3,8] - 55*x[M3,8] :   0.0 :   True
+         ('M3', 9) :  -Inf :   p[M3,9] - 55*x[M3,9] :   0.0 :   True
+        ('M3', 10) :  -Inf : p[M3,10] - 55*x[M3,10] :   0.0 :   True
     con_start_criteria : Size=30, Index=power_units*time_periods, Active=True
         Key        : Lower : Body                : Upper : Active
          ('M1', 1) :  -Inf :   y[M1,1] + z[M1,1] :   1.0 :   True
@@ -1052,38 +971,6 @@ Solution:
          ('M3', 8) :  -Inf :    x[M3,8] - x[M3,7] - (1 - z[M3,8] - (1 - y[M3,8])) :   0.0 :   True
          ('M3', 9) :  -Inf :    x[M3,9] - x[M3,8] - (1 - z[M3,9] - (1 - y[M3,9])) :   0.0 :   True
         ('M3', 10) :  -Inf : x[M3,10] - x[M3,9] - (1 - z[M3,10] - (1 - y[M3,10])) :   0.0 :   True
-    con_unit_load : Size=30, Index=power_units*time_periods, Active=True
-        Key        : Lower : Body                                       : Upper : Active
-         ('M1', 1) :   0.0 :    p[M1,1] - (10*x[M1,1] + 40*gamma[M1,1]) :   0.0 :   True
-         ('M1', 2) :   0.0 :    p[M1,2] - (10*x[M1,2] + 40*gamma[M1,2]) :   0.0 :   True
-         ('M1', 3) :   0.0 :    p[M1,3] - (10*x[M1,3] + 40*gamma[M1,3]) :   0.0 :   True
-         ('M1', 4) :   0.0 :    p[M1,4] - (10*x[M1,4] + 40*gamma[M1,4]) :   0.0 :   True
-         ('M1', 5) :   0.0 :    p[M1,5] - (10*x[M1,5] + 40*gamma[M1,5]) :   0.0 :   True
-         ('M1', 6) :   0.0 :    p[M1,6] - (10*x[M1,6] + 40*gamma[M1,6]) :   0.0 :   True
-         ('M1', 7) :   0.0 :    p[M1,7] - (10*x[M1,7] + 40*gamma[M1,7]) :   0.0 :   True
-         ('M1', 8) :   0.0 :    p[M1,8] - (10*x[M1,8] + 40*gamma[M1,8]) :   0.0 :   True
-         ('M1', 9) :   0.0 :    p[M1,9] - (10*x[M1,9] + 40*gamma[M1,9]) :   0.0 :   True
-        ('M1', 10) :   0.0 : p[M1,10] - (10*x[M1,10] + 40*gamma[M1,10]) :   0.0 :   True
-         ('M2', 1) :   0.0 :    p[M2,1] - (12*x[M2,1] + 33*gamma[M2,1]) :   0.0 :   True
-         ('M2', 2) :   0.0 :    p[M2,2] - (12*x[M2,2] + 33*gamma[M2,2]) :   0.0 :   True
-         ('M2', 3) :   0.0 :    p[M2,3] - (12*x[M2,3] + 33*gamma[M2,3]) :   0.0 :   True
-         ('M2', 4) :   0.0 :    p[M2,4] - (12*x[M2,4] + 33*gamma[M2,4]) :   0.0 :   True
-         ('M2', 5) :   0.0 :    p[M2,5] - (12*x[M2,5] + 33*gamma[M2,5]) :   0.0 :   True
-         ('M2', 6) :   0.0 :    p[M2,6] - (12*x[M2,6] + 33*gamma[M2,6]) :   0.0 :   True
-         ('M2', 7) :   0.0 :    p[M2,7] - (12*x[M2,7] + 33*gamma[M2,7]) :   0.0 :   True
-         ('M2', 8) :   0.0 :    p[M2,8] - (12*x[M2,8] + 33*gamma[M2,8]) :   0.0 :   True
-         ('M2', 9) :   0.0 :    p[M2,9] - (12*x[M2,9] + 33*gamma[M2,9]) :   0.0 :   True
-        ('M2', 10) :   0.0 : p[M2,10] - (12*x[M2,10] + 33*gamma[M2,10]) :   0.0 :   True
-         ('M3', 1) :   0.0 :    p[M3,1] - (15*x[M3,1] + 40*gamma[M3,1]) :   0.0 :   True
-         ('M3', 2) :   0.0 :    p[M3,2] - (15*x[M3,2] + 40*gamma[M3,2]) :   0.0 :   True
-         ('M3', 3) :   0.0 :    p[M3,3] - (15*x[M3,3] + 40*gamma[M3,3]) :   0.0 :   True
-         ('M3', 4) :   0.0 :    p[M3,4] - (15*x[M3,4] + 40*gamma[M3,4]) :   0.0 :   True
-         ('M3', 5) :   0.0 :    p[M3,5] - (15*x[M3,5] + 40*gamma[M3,5]) :   0.0 :   True
-         ('M3', 6) :   0.0 :    p[M3,6] - (15*x[M3,6] + 40*gamma[M3,6]) :   0.0 :   True
-         ('M3', 7) :   0.0 :    p[M3,7] - (15*x[M3,7] + 40*gamma[M3,7]) :   0.0 :   True
-         ('M3', 8) :   0.0 :    p[M3,8] - (15*x[M3,8] + 40*gamma[M3,8]) :   0.0 :   True
-         ('M3', 9) :   0.0 :    p[M3,9] - (15*x[M3,9] + 40*gamma[M3,9]) :   0.0 :   True
-        ('M3', 10) :   0.0 : p[M3,10] - (15*x[M3,10] + 40*gamma[M3,10]) :   0.0 :   True
     con_warm_start_lb : Size=30, Index=power_units*time_periods, Active=True
         Key        : Lower : Body                              : Upper : Active
          ('M1', 1) :   0.0 :                 z[M1,1] + w[M1,1] :   0.0 :   True
@@ -1152,256 +1039,255 @@ Solution:
 1 Suffix Declarations
     dual : Direction=IMPORT_EXPORT, Datatype=FLOAT
         Key                       : Value
-                 con_cyclic[M1,1] :    0.0
-                 con_cyclic[M1,2] :   12.5
-                 con_cyclic[M1,3] :    0.0
-                 con_cyclic[M1,4] :    0.0
-                 con_cyclic[M1,5] :   11.5
-                 con_cyclic[M2,1] :    0.0
-                 con_cyclic[M2,2] :   12.5
-                 con_cyclic[M2,3] :   12.5
-                 con_cyclic[M2,4] :   12.5
-                 con_cyclic[M2,5] :    0.0
-                 con_cyclic[M3,1] :    0.0
-                 con_cyclic[M3,2] :    0.0
-                 con_cyclic[M3,3] :   13.0
-                 con_cyclic[M3,4] :   13.0
-                 con_cyclic[M3,5] :   12.0
-                   con_demand[10] :   24.0
-                    con_demand[1] :   12.5
-                    con_demand[2] :    0.0
-                    con_demand[3] :    0.0
-                    con_demand[4] :    0.0
-                    con_demand[5] :    0.0
-                    con_demand[6] :   12.5
-                    con_demand[7] :   25.0
-                    con_demand[8] :   25.0
-                    con_demand[9] :   25.0
-                 con_gamma[M1,10] :    0.0
-                  con_gamma[M1,1] :    0.0
-                  con_gamma[M1,2] :    0.0
-                  con_gamma[M1,3] :    0.0
-                  con_gamma[M1,4] :    0.0
-                  con_gamma[M1,5] :    0.0
-                  con_gamma[M1,6] :    0.0
-                  con_gamma[M1,7] :    0.0
-                  con_gamma[M1,8] : -500.0
-                  con_gamma[M1,9] : -500.0
-                 con_gamma[M2,10] : -379.5
-                  con_gamma[M2,1] :    0.0
-                  con_gamma[M2,2] :    0.0
-                  con_gamma[M2,3] :    0.0
-                  con_gamma[M2,4] :    0.0
-                  con_gamma[M2,5] :    0.0
-                  con_gamma[M2,6] :    0.0
-                  con_gamma[M2,7] :    0.0
-                  con_gamma[M2,8] :    0.0
-                  con_gamma[M2,9] :    0.0
-                 con_gamma[M3,10] :    0.0
-                  con_gamma[M3,1] :  -20.0
-                  con_gamma[M3,2] :    0.0
-                  con_gamma[M3,3] :    0.0
-                  con_gamma[M3,4] :    0.0
-                  con_gamma[M3,5] :    0.0
-                  con_gamma[M3,6] :  -20.0
-                  con_gamma[M3,7] : -520.0
-                  con_gamma[M3,8] :    0.0
-                  con_gamma[M3,9] :    0.0
-                    con_seq[M1,1] :    0.0
-                    con_seq[M1,2] :    0.0
-                    con_seq[M1,3] :    0.0
-                    con_seq[M1,4] :    0.0
-                    con_seq[M1,5] :    0.0
-                    con_seq[M2,1] :    0.0
-                    con_seq[M2,2] :    0.0
-                    con_seq[M2,3] :    0.0
-                    con_seq[M2,4] :    0.0
-                    con_seq[M2,5] :    0.0
-                    con_seq[M3,1] :    0.0
-                    con_seq[M3,2] :    0.0
-                    con_seq[M3,3] :    0.0
-                    con_seq[M3,4] :    0.0
-                    con_seq[M3,5] :    0.0
-        con_start_criteria[M1,10] :    0.0
-         con_start_criteria[M1,1] :    0.0
-         con_start_criteria[M1,2] :    0.0
-         con_start_criteria[M1,3] :    0.0
-         con_start_criteria[M1,4] :    0.0
-         con_start_criteria[M1,5] :    0.0
-         con_start_criteria[M1,6] :    0.0
-         con_start_criteria[M1,7] :    0.0
-         con_start_criteria[M1,8] :    0.0
-         con_start_criteria[M1,9] :    0.0
-        con_start_criteria[M2,10] :    0.0
-         con_start_criteria[M2,1] :    0.0
-         con_start_criteria[M2,2] :    0.0
-         con_start_criteria[M2,3] :    0.0
-         con_start_criteria[M2,4] :    0.0
-         con_start_criteria[M2,5] :    0.0
-         con_start_criteria[M2,6] :    0.0
-         con_start_criteria[M2,7] :    0.0
-         con_start_criteria[M2,8] :    0.0
-         con_start_criteria[M2,9] :    0.0
-        con_start_criteria[M3,10] :    0.0
-         con_start_criteria[M3,1] :    0.0
-         con_start_criteria[M3,2] :    0.0
-         con_start_criteria[M3,3] :    0.0
-         con_start_criteria[M3,4] :    0.0
-         con_start_criteria[M3,5] :    0.0
-         con_start_criteria[M3,6] :    0.0
-         con_start_criteria[M3,7] :    0.0
-         con_start_criteria[M3,8] :    0.0
-         con_start_criteria[M3,9] :    0.0
-              con_start_lb[M1,10] :    0.0
-               con_start_lb[M1,1] :    0.0
-               con_start_lb[M1,2] :    0.0
-               con_start_lb[M1,3] :    0.0
-               con_start_lb[M1,4] :    0.0
-               con_start_lb[M1,5] :    0.0
-               con_start_lb[M1,6] :    0.0
-               con_start_lb[M1,7] :    0.0
-               con_start_lb[M1,8] :    0.0
-               con_start_lb[M1,9] :    0.0
-              con_start_lb[M2,10] :    0.0
-               con_start_lb[M2,1] :    0.0
-               con_start_lb[M2,2] :    0.0
-               con_start_lb[M2,3] :    0.0
-               con_start_lb[M2,4] :    0.0
-               con_start_lb[M2,5] :    0.0
-               con_start_lb[M2,6] :    0.0
-               con_start_lb[M2,7] :    0.0
-               con_start_lb[M2,8] :    0.0
-               con_start_lb[M2,9] :    0.0
-              con_start_lb[M3,10] :    0.0
-               con_start_lb[M3,1] :    0.0
-               con_start_lb[M3,2] :    0.0
-               con_start_lb[M3,3] :    0.0
-               con_start_lb[M3,4] :    0.0
-               con_start_lb[M3,5] :    0.0
-               con_start_lb[M3,6] :    0.0
-               con_start_lb[M3,7] :    0.0
-               con_start_lb[M3,8] :    0.0
-               con_start_lb[M3,9] :    0.0
-              con_start_ub[M1,10] :    0.0
-               con_start_ub[M1,1] :    0.0
-               con_start_ub[M1,2] :    0.0
-               con_start_ub[M1,3] :    0.0
-               con_start_ub[M1,4] :    0.0
-               con_start_ub[M1,5] :    0.0
-               con_start_ub[M1,6] :    0.0
-               con_start_ub[M1,7] :    0.0
-               con_start_ub[M1,8] :    0.0
-               con_start_ub[M1,9] :    0.0
-              con_start_ub[M2,10] :    0.0
-               con_start_ub[M2,1] :    0.0
-               con_start_ub[M2,2] :    0.0
-               con_start_ub[M2,3] :    0.0
-               con_start_ub[M2,4] :    0.0
-               con_start_ub[M2,5] :    0.0
-               con_start_ub[M2,6] :    0.0
-               con_start_ub[M2,7] :    0.0
-               con_start_ub[M2,8] :    0.0
-               con_start_ub[M2,9] :    0.0
-              con_start_ub[M3,10] :    0.0
-               con_start_ub[M3,1] :    0.0
-               con_start_ub[M3,2] :    0.0
-               con_start_ub[M3,3] :    0.0
-               con_start_ub[M3,4] :    0.0
-               con_start_ub[M3,5] :    0.0
-               con_start_ub[M3,6] :    0.0
-               con_start_ub[M3,7] :    0.0
-               con_start_ub[M3,8] :    0.0
-               con_start_ub[M3,9] :    0.0
-             con_unit_load[M1,10] :    0.0
-              con_unit_load[M1,1] :    0.0
-              con_unit_load[M1,2] :    0.0
-              con_unit_load[M1,3] :   12.5
-              con_unit_load[M1,4] :   12.5
-              con_unit_load[M1,5] :    1.0
-              con_unit_load[M1,6] :    0.0
-              con_unit_load[M1,7] :    0.0
-              con_unit_load[M1,8] :  -12.5
-              con_unit_load[M1,9] :  -12.5
-             con_unit_load[M2,10] :  -11.5
-              con_unit_load[M2,1] :    0.0
-              con_unit_load[M2,2] :    0.0
-              con_unit_load[M2,3] :    0.0
-              con_unit_load[M2,4] :    0.0
-              con_unit_load[M2,5] :   12.5
-              con_unit_load[M2,6] :    0.0
-              con_unit_load[M2,7] :    0.0
-              con_unit_load[M2,8] :    0.0
-              con_unit_load[M2,9] :    0.0
-             con_unit_load[M3,10] :    0.0
-              con_unit_load[M3,1] :   -0.5
-              con_unit_load[M3,2] :   12.0
-              con_unit_load[M3,3] :   -1.0
-              con_unit_load[M3,4] :   -1.0
-              con_unit_load[M3,5] :    0.0
-              con_unit_load[M3,6] :   -0.5
-              con_unit_load[M3,7] :  -13.0
-              con_unit_load[M3,8] :    0.0
-              con_unit_load[M3,9] :    0.0
-         con_warm_start_lb[M1,10] :    0.0
-          con_warm_start_lb[M1,1] :    0.0
-          con_warm_start_lb[M1,2] :    0.0
-          con_warm_start_lb[M1,3] :    0.0
-          con_warm_start_lb[M1,4] :    0.0
-          con_warm_start_lb[M1,5] :    0.0
-          con_warm_start_lb[M1,6] :    0.0
-          con_warm_start_lb[M1,7] :    0.0
-          con_warm_start_lb[M1,8] :    0.0
-          con_warm_start_lb[M1,9] :    0.0
-         con_warm_start_lb[M2,10] :    0.0
-          con_warm_start_lb[M2,1] :    0.0
-          con_warm_start_lb[M2,2] :    0.0
-          con_warm_start_lb[M2,3] :    0.0
-          con_warm_start_lb[M2,4] :    0.0
-          con_warm_start_lb[M2,5] :    0.0
-          con_warm_start_lb[M2,6] :    0.0
-          con_warm_start_lb[M2,7] :    0.0
-          con_warm_start_lb[M2,8] :    0.0
-          con_warm_start_lb[M2,9] :    0.0
-         con_warm_start_lb[M3,10] :    0.0
-          con_warm_start_lb[M3,1] :    0.0
-          con_warm_start_lb[M3,2] :    0.0
-          con_warm_start_lb[M3,3] :    0.0
-          con_warm_start_lb[M3,4] :    0.0
-          con_warm_start_lb[M3,5] :    0.0
-          con_warm_start_lb[M3,6] :    0.0
-          con_warm_start_lb[M3,7] :    0.0
-          con_warm_start_lb[M3,8] :    0.0
-          con_warm_start_lb[M3,9] :    0.0
-         con_warm_start_ub[M1,10] :    0.0
-          con_warm_start_ub[M1,1] :    0.0
-          con_warm_start_ub[M1,2] :    0.0
-          con_warm_start_ub[M1,3] :    0.0
-          con_warm_start_ub[M1,4] :    0.0
-          con_warm_start_ub[M1,5] :    0.0
-          con_warm_start_ub[M1,6] :    0.0
-          con_warm_start_ub[M1,7] :    0.0
-          con_warm_start_ub[M1,8] :    0.0
-          con_warm_start_ub[M1,9] :    0.0
-         con_warm_start_ub[M2,10] :    0.0
-          con_warm_start_ub[M2,1] :    0.0
-          con_warm_start_ub[M2,2] :    0.0
-          con_warm_start_ub[M2,3] :    0.0
-          con_warm_start_ub[M2,4] :    0.0
-          con_warm_start_ub[M2,5] :    0.0
-          con_warm_start_ub[M2,6] :    0.0
-          con_warm_start_ub[M2,7] :    0.0
-          con_warm_start_ub[M2,8] :    0.0
-          con_warm_start_ub[M2,9] :    0.0
-         con_warm_start_ub[M3,10] :    0.0
-          con_warm_start_ub[M3,1] :    0.0
-          con_warm_start_ub[M3,2] :    0.0
-          con_warm_start_ub[M3,3] :    0.0
-          con_warm_start_ub[M3,4] :    0.0
-          con_warm_start_ub[M3,5] :    0.0
-          con_warm_start_ub[M3,6] :    0.0
-          con_warm_start_ub[M3,7] :    0.0
-          con_warm_start_ub[M3,8] :    0.0
-          con_warm_start_ub[M3,9] :    0.0
+                 con_consec[M1,1] :   0.0
+                 con_consec[M1,2] :   0.0
+                 con_consec[M1,3] :   0.0
+                 con_consec[M1,4] :   0.0
+                 con_consec[M1,5] :   0.0
+                 con_consec[M2,1] :   0.0
+                 con_consec[M2,2] :   0.0
+                 con_consec[M2,3] :   0.0
+                 con_consec[M2,4] :   0.0
+                 con_consec[M2,5] :   0.0
+                 con_consec[M3,1] :   0.0
+                 con_consec[M3,2] :   0.0
+                 con_consec[M3,3] :   0.0
+                 con_consec[M3,4] :   0.0
+                 con_consec[M3,5] :   0.0
+                 con_cyclic[M1,1] :   0.0
+                 con_cyclic[M1,2] :   0.0
+                 con_cyclic[M1,3] :   0.0
+                 con_cyclic[M1,4] :   0.0
+                 con_cyclic[M1,5] :   0.0
+                 con_cyclic[M2,1] :   0.0
+                 con_cyclic[M2,2] :   0.0
+                 con_cyclic[M2,3] :   0.0
+                 con_cyclic[M2,4] :   0.0
+                 con_cyclic[M2,5] :   0.0
+                 con_cyclic[M3,1] :   0.0
+                 con_cyclic[M3,2] :   0.0
+                 con_cyclic[M3,3] :   0.0
+                 con_cyclic[M3,4] :   0.0
+                 con_cyclic[M3,5] :   0.0
+                   con_demand[10] :  10.0
+                    con_demand[1] :   0.0
+                    con_demand[2] :   0.0
+                    con_demand[3] :   0.0
+                    con_demand[4] :   0.0
+                    con_demand[5] :   0.0
+                    con_demand[6] :  12.5
+                    con_demand[7] :  12.0
+                    con_demand[8] :  12.5
+                    con_demand[9] :  12.5
+               con_load_lb[M1,10] :   0.0
+                con_load_lb[M1,1] :   0.0
+                con_load_lb[M1,2] :   0.0
+                con_load_lb[M1,3] :   0.0
+                con_load_lb[M1,4] :   0.0
+                con_load_lb[M1,5] :   0.0
+                con_load_lb[M1,6] :   0.0
+                con_load_lb[M1,7] :  -0.5
+                con_load_lb[M1,8] :   0.0
+                con_load_lb[M1,9] :   0.0
+               con_load_lb[M2,10] :   0.0
+                con_load_lb[M2,1] :   0.0
+                con_load_lb[M2,2] :   0.0
+                con_load_lb[M2,3] :   0.0
+                con_load_lb[M2,4] :   0.0
+                con_load_lb[M2,5] :   0.0
+                con_load_lb[M2,6] :   0.0
+                con_load_lb[M2,7] :   0.0
+                con_load_lb[M2,8] :   0.0
+                con_load_lb[M2,9] :   0.0
+               con_load_lb[M3,10] :   0.0
+                con_load_lb[M3,1] :   0.0
+                con_load_lb[M3,2] :   0.0
+                con_load_lb[M3,3] :   0.0
+                con_load_lb[M3,4] :   0.0
+                con_load_lb[M3,5] :   0.0
+                con_load_lb[M3,6] :   0.0
+                con_load_lb[M3,7] :   0.0
+                con_load_lb[M3,8] :   0.0
+                con_load_lb[M3,9] :   0.0
+               con_load_ub[M1,10] :   0.0
+                con_load_ub[M1,1] :   0.0
+                con_load_ub[M1,2] :   0.0
+                con_load_ub[M1,3] :   0.0
+                con_load_ub[M1,4] :   0.0
+                con_load_ub[M1,5] :   0.0
+                con_load_ub[M1,6] :   0.0
+                con_load_ub[M1,7] :   0.0
+                con_load_ub[M1,8] :   0.0
+                con_load_ub[M1,9] :   0.0
+               con_load_ub[M2,10] :   0.0
+                con_load_ub[M2,1] :   0.0
+                con_load_ub[M2,2] :   0.0
+                con_load_ub[M2,3] :   0.0
+                con_load_ub[M2,4] :   0.0
+                con_load_ub[M2,5] :   0.0
+                con_load_ub[M2,6] :   0.0
+                con_load_ub[M2,7] :   0.0
+                con_load_ub[M2,8] :   0.0
+                con_load_ub[M2,9] :   0.0
+               con_load_ub[M3,10] :  -0.4
+                con_load_ub[M3,1] :   0.0
+                con_load_ub[M3,2] :   0.0
+                con_load_ub[M3,3] :   0.0
+                con_load_ub[M3,4] :   0.0
+                con_load_ub[M3,5] :   0.0
+                con_load_ub[M3,6] :  -0.5
+                con_load_ub[M3,7] :   0.0
+                con_load_ub[M3,8] :  -0.5
+                con_load_ub[M3,9] :  -0.5
+        con_start_criteria[M1,10] :   0.0
+         con_start_criteria[M1,1] :   0.0
+         con_start_criteria[M1,2] :   0.0
+         con_start_criteria[M1,3] :   0.0
+         con_start_criteria[M1,4] :   0.0
+         con_start_criteria[M1,5] :   0.0
+         con_start_criteria[M1,6] :   0.0
+         con_start_criteria[M1,7] :   0.0
+         con_start_criteria[M1,8] :   0.0
+         con_start_criteria[M1,9] :   0.0
+        con_start_criteria[M2,10] :   0.0
+         con_start_criteria[M2,1] :   0.0
+         con_start_criteria[M2,2] :   0.0
+         con_start_criteria[M2,3] :   0.0
+         con_start_criteria[M2,4] :   0.0
+         con_start_criteria[M2,5] :   0.0
+         con_start_criteria[M2,6] :   0.0
+         con_start_criteria[M2,7] :   0.0
+         con_start_criteria[M2,8] :   0.0
+         con_start_criteria[M2,9] :   0.0
+        con_start_criteria[M3,10] :   0.0
+         con_start_criteria[M3,1] :   0.0
+         con_start_criteria[M3,2] :   0.0
+         con_start_criteria[M3,3] :   0.0
+         con_start_criteria[M3,4] :   0.0
+         con_start_criteria[M3,5] :   0.0
+         con_start_criteria[M3,6] :   0.0
+         con_start_criteria[M3,7] :   0.0
+         con_start_criteria[M3,8] :   0.0
+         con_start_criteria[M3,9] :   0.0
+              con_start_lb[M1,10] :   0.0
+               con_start_lb[M1,1] :   0.0
+               con_start_lb[M1,2] :   0.0
+               con_start_lb[M1,3] :   0.0
+               con_start_lb[M1,4] :   0.0
+               con_start_lb[M1,5] :   0.0
+               con_start_lb[M1,6] :   0.0
+               con_start_lb[M1,7] :   0.0
+               con_start_lb[M1,8] :   0.0
+               con_start_lb[M1,9] :   0.0
+              con_start_lb[M2,10] :   0.0
+               con_start_lb[M2,1] :   0.0
+               con_start_lb[M2,2] :   0.0
+               con_start_lb[M2,3] :   0.0
+               con_start_lb[M2,4] :   0.0
+               con_start_lb[M2,5] :   0.0
+               con_start_lb[M2,6] :   0.0
+               con_start_lb[M2,7] :   0.0
+               con_start_lb[M2,8] :   0.0
+               con_start_lb[M2,9] :   0.0
+              con_start_lb[M3,10] :   0.0
+               con_start_lb[M3,1] :   0.0
+               con_start_lb[M3,2] :   0.0
+               con_start_lb[M3,3] :   0.0
+               con_start_lb[M3,4] :   0.0
+               con_start_lb[M3,5] :   0.0
+               con_start_lb[M3,6] :   0.0
+               con_start_lb[M3,7] :   0.0
+               con_start_lb[M3,8] :   0.0
+               con_start_lb[M3,9] :   0.0
+              con_start_ub[M1,10] :   0.0
+               con_start_ub[M1,1] :   0.0
+               con_start_ub[M1,2] :   0.0
+               con_start_ub[M1,3] :   0.0
+               con_start_ub[M1,4] :   0.0
+               con_start_ub[M1,5] :   0.0
+               con_start_ub[M1,6] :   0.0
+               con_start_ub[M1,7] :   0.0
+               con_start_ub[M1,8] :   0.0
+               con_start_ub[M1,9] :   0.0
+              con_start_ub[M2,10] :   0.0
+               con_start_ub[M2,1] :   0.0
+               con_start_ub[M2,2] :   0.0
+               con_start_ub[M2,3] :   0.0
+               con_start_ub[M2,4] :   0.0
+               con_start_ub[M2,5] :   0.0
+               con_start_ub[M2,6] :   0.0
+               con_start_ub[M2,7] :   0.0
+               con_start_ub[M2,8] :   0.0
+               con_start_ub[M2,9] :   0.0
+              con_start_ub[M3,10] :   0.0
+               con_start_ub[M3,1] :   0.0
+               con_start_ub[M3,2] :   0.0
+               con_start_ub[M3,3] :   0.0
+               con_start_ub[M3,4] :   0.0
+               con_start_ub[M3,5] :   0.0
+               con_start_ub[M3,6] :   0.0
+               con_start_ub[M3,7] :   0.0
+               con_start_ub[M3,8] :   0.0
+               con_start_ub[M3,9] :   0.0
+         con_warm_start_lb[M1,10] :   0.0
+          con_warm_start_lb[M1,1] :   0.0
+          con_warm_start_lb[M1,2] :   0.0
+          con_warm_start_lb[M1,3] :   0.0
+          con_warm_start_lb[M1,4] :   0.0
+          con_warm_start_lb[M1,5] :   0.0
+          con_warm_start_lb[M1,6] :   0.0
+          con_warm_start_lb[M1,7] :   0.0
+          con_warm_start_lb[M1,8] :   0.0
+          con_warm_start_lb[M1,9] :   0.0
+         con_warm_start_lb[M2,10] :   0.0
+          con_warm_start_lb[M2,1] :   0.0
+          con_warm_start_lb[M2,2] :   0.0
+          con_warm_start_lb[M2,3] :   0.0
+          con_warm_start_lb[M2,4] :   0.0
+          con_warm_start_lb[M2,5] :   0.0
+          con_warm_start_lb[M2,6] :   0.0
+          con_warm_start_lb[M2,7] :   0.0
+          con_warm_start_lb[M2,8] :   0.0
+          con_warm_start_lb[M2,9] :   0.0
+         con_warm_start_lb[M3,10] :   0.0
+          con_warm_start_lb[M3,1] :   0.0
+          con_warm_start_lb[M3,2] :   0.0
+          con_warm_start_lb[M3,3] :   0.0
+          con_warm_start_lb[M3,4] :   0.0
+          con_warm_start_lb[M3,5] :   0.0
+          con_warm_start_lb[M3,6] :   0.0
+          con_warm_start_lb[M3,7] :   0.0
+          con_warm_start_lb[M3,8] :   0.0
+          con_warm_start_lb[M3,9] :   0.0
+         con_warm_start_ub[M1,10] :   0.0
+          con_warm_start_ub[M1,1] :   0.0
+          con_warm_start_ub[M1,2] :   0.0
+          con_warm_start_ub[M1,3] :   0.0
+          con_warm_start_ub[M1,4] :   0.0
+          con_warm_start_ub[M1,5] :   0.0
+          con_warm_start_ub[M1,6] :   0.0
+          con_warm_start_ub[M1,7] :   0.0
+          con_warm_start_ub[M1,8] :   0.0
+          con_warm_start_ub[M1,9] :   0.0
+         con_warm_start_ub[M2,10] :   0.0
+          con_warm_start_ub[M2,1] :   0.0
+          con_warm_start_ub[M2,2] :   0.0
+          con_warm_start_ub[M2,3] :   0.0
+          con_warm_start_ub[M2,4] :   0.0
+          con_warm_start_ub[M2,5] :   0.0
+          con_warm_start_ub[M2,6] :   0.0
+          con_warm_start_ub[M2,7] :   0.0
+          con_warm_start_ub[M2,8] :   0.0
+          con_warm_start_ub[M2,9] :   0.0
+         con_warm_start_ub[M3,10] :   0.0
+          con_warm_start_ub[M3,1] :   0.0
+          con_warm_start_ub[M3,2] :   0.0
+          con_warm_start_ub[M3,3] :   0.0
+          con_warm_start_ub[M3,4] :   0.0
+          con_warm_start_ub[M3,5] :   0.0
+          con_warm_start_ub[M3,6] :   0.0
+          con_warm_start_ub[M3,7] :   0.0
+          con_warm_start_ub[M3,8] :   0.0
+          con_warm_start_ub[M3,9] :   0.0
 
-26 Declarations: power_units time_periods tau start_cost running_cost power_demand unit_limit_lb unit_limit_ub x gamma p y z w con_gamma con_unit_load con_demand con_cyclic con_seq con_start_lb con_start_ub con_start_criteria con_warm_start_ub con_warm_start_lb obj_cost dual
-(.venv) kristjanrox@Kristjans-MacBook-Pro vel113f_h25 % 
+28 Declarations: power_units time_periods tau start_cost running_cost power_demand unit_limit_lb unit_limit_ub x p y z w con_load_ub con_load_lb con_demand con_cyclic con_consec con_start_lb con_start_ub con_start_criteria con_warm_start_ub con_warm_start_lb obj_rep_runcost obj_rep_startcost obj_init_startcost obj_cost dual

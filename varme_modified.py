@@ -5,7 +5,7 @@ import pyomo.environ as pyo
 import os
 
 # define the pyomo model
-model = pyo.ConcreteModel(name="Varme")
+model = pyo.ConcreteModel(name="Varme_modified")
 
 
 # =======================================
@@ -43,13 +43,13 @@ def rule_con_cyclic(model, k, j):
         return pyo.Constraint.Skip
 
 
-def rule_con_seq(model, k, j):
+def rule_con_consec(model, k, j):
     # rule function to constrain each power unit k to not run for more than 3 con_sequtive time periods j.
     # this constraint is only needed for the first half of the time periods, i.e. j = 1,...,5
     # as cyclicity takes care of the other half
 
     if j <= len(model.time_periods)/2:
-        return sum(model.x[k, j] for j in pyo.RangeSet(j, j + 3)) <= 3
+        return sum(model.x[k, j] for j in pyo.RangeSet(j, j + 5)) <= 5
     else:
         return pyo.Constraint.Skip
 
@@ -86,10 +86,9 @@ def rule_con_warm_start_ub(model, k, j):
         return model.z[k, j] + model.w[k, j] == 0
 
 
-def rule_obj_cost(model):
-    # rule function for objective function, i.e. minimize total cost of running the power units
-
-    initial_cold_start_cost = sum(
+def rule_obj_init_startcost(model):
+    # rule function for the initial start cost 
+    initial_start_cost = sum(
         (
            1.5 * model.start_cost[k]
         )
@@ -107,77 +106,44 @@ def rule_obj_cost(model):
         )
         for k in model.power_units
     )
+    
+    return initial_start_cost
 
-    repeat_warm_start_cost = sum(
-        model.w[k, j] * model.start_cost[k]
-        for k in model.power_units
-        for j in list(model.time_periods)[5:]
-    )
-
-    repeat_cold_start_cost = sum(
-        (
-                sum(model.y[k, j] for j in list(model.time_periods)[5:])
-                - sum(model.w[k, j] for j in list(model.time_periods)[5:])
+def rule_obj_rep_startcost(model):
+    # rule function for the repeat start cost (warm+cold) in second schedule
+    rep_warm_start_cost = sum(
+            model.w[k, j] 
+            * model.start_cost[k]
+            for k in model.power_units
+            for j in list(model.time_periods)[5:]
         )
-        * 1.5
-        * model.start_cost[k]
-        for k in model.power_units
-    )
 
-    running_cost = sum(
+    rep_cold_start_cost = sum(
+            (
+                    sum(model.y[k, j] for j in list(model.time_periods)[5:])
+                    - sum(model.w[k, j] for j in list(model.time_periods)[5:])
+            )
+            * 1.5
+            * model.start_cost[k]
+            for k in model.power_units
+        )
+
+    return rep_warm_start_cost + rep_cold_start_cost
+
+
+def rule_obj_rep_runcost(model):
+    # rule function for the repeat running cost of all units in second schedule
+    run_cost = sum(
         sum(
             model.p[k, j]
             * model.tau[j]
-            for j in model.time_periods
+            for j in list(model.time_periods)[5:]
         )
         * model.running_cost[k]
         for k in model.power_units
     )
 
-    return (
-        running_cost
-        + repeat_cold_start_cost
-        + repeat_warm_start_cost
-        + initial_cold_start_cost
-    )
-
-
-def print_solution(result_model):
-
-    # print model name
-    print(f"Model name: {result_model.name}")
-
-    # print objective function value
-    for obj in result_model.component_objects(pyo.Objective):
-        print(f"Objective name: {obj.name} = {pyo.value(obj)}")
-
-    # print variables and bounds
-    for var in result_model.component_objects(pyo.Var):
-        for idx in var:
-            print(f"Variable name: {var[idx].name}, "
-                  f"value = {pyo.value(var[idx])}, "
-                  f"lower slack = {var[idx].bounds}"
-                  )
-
-    # print constraint function values, slacks, and dual variables
-    for con in result_model.component_objects(pyo.Constraint):
-        for idx in con:
-            # calculate the constraint slack
-            # slack = pyo.value(con[idx].upper) - pyo.value(con[idx].body)
-            print(f"Constraint name: {con[idx].name}, "
-                  f"value = {pyo.value(con[idx])}, "
-                  f"lower slack = {con[idx].lslack()}, "
-                  f"upper slack = {con[idx].uslack()}, "
-                  )
-
-            try:
-                print(f"dual variable = {result_model.dual[con[idx]]}")
-            except:
-                print('Duals are not available. Ensure problem type and/or solver supports dual extraction')
-
-    return result_model
-# =======================================
-
+    return run_cost
 
 # ======================================
 # SETS
@@ -188,7 +154,7 @@ model.power_units = pyo.Set(
     initialize=['M1', 'M2', 'M3']
 )
 
-# define the set of time periods, for two consequtive schedules of 5 time periods each
+# define the set of time periods, for two consecutive schedules of 5 time periods each
 model.time_periods = pyo.RangeSet(1, 10)
 
 # ======================================
@@ -199,7 +165,7 @@ model.time_periods = pyo.RangeSet(1, 10)
 model.tau = pyo.Param(
     model.time_periods,
     domain=pyo.NonNegativeReals,
-    initialize=5
+    initialize=lambda model, j: 5 if (j%5!=0) else 4
 )
 
 # start cost of each power unit k
@@ -246,8 +212,8 @@ model.unit_limit_ub = pyo.Param(
     model.power_units,
     initialize={
         'M1': 50,
-        'M2': 40,
-        'M3': 55+25 # modified upper limit based on dual analysis
+        'M2': 45,
+        'M3': 55
     }
 )
 
@@ -261,16 +227,6 @@ model.x = pyo.Var(
     model.time_periods,
     domain=pyo.Binary,
     initialize=0
-)
-
-# gamma is a real variable between 0 and 1 describing the power output of unit k in time period j 
-# as a fraction of its possible power range
-
-model.gamma = pyo.Var(
-    model.power_units,
-    model.time_periods,
-    domain=pyo.NonNegativeReals,
-    bounds=(0, 1)
 )
 
 # real variable power output of unit k in time period j
@@ -308,18 +264,18 @@ model.w = pyo.Var(
 # CONSTRAINTS
 # ======================================
 
-# constraint to define relationship between load ratio gamma to power output p of each unit k in time period j
-model.con_gamma = pyo.Constraint(
+# constraint for upper bound on produced power of each unit k in time period j
+model.con_load_ub = pyo.Constraint(
     model.power_units,
     model.time_periods,
-    rule=lambda model, k, j: model.gamma[k, j] <= model.x[k, j]
+    rule=lambda model, k, j: model.p[k, j] <= model.x[k, j]*model.unit_limit_ub[k]
 )
 
-# constraint for upper bound on produced power of each unit k in time period j
-model.con_unit_load = pyo.Constraint(
+# constraint for lower bound on produced power of each unit k in time period j
+model.con_load_lb = pyo.Constraint(
     model.power_units,
     model.time_periods,
-    rule=lambda model, k, j: model.p[k, j] == model.x[k, j]*model.unit_limit_lb[k] + model.gamma[k, j]*(model.unit_limit_ub[k] - model.unit_limit_lb[k])
+    rule=lambda model, k, j: model.p[k, j] >= model.x[k, j]*model.unit_limit_lb[k]
 )
 
 # constraint to ensure total power production meets demand in each time period j
@@ -335,11 +291,11 @@ model.con_cyclic = pyo.Constraint(
     rule=rule_con_cyclic
 )
 
-# constraint to ensure no unit runs for more than 3 consequtive time periods
-model.con_seq = pyo.Constraint(
+# constraint to ensure no unit runs for more than 3 consecutive time periods
+model.con_consec = pyo.Constraint(
     model.power_units,
     model.time_periods,
-    rule=rule_con_seq
+    rule=rule_con_consec
 )
 
 # start/stop constraint, lower bound
@@ -381,26 +337,67 @@ model.con_warm_start_lb = pyo.Constraint(
 # OBJECTIVE
 # ======================================
 
+# define repeat running cost function, deactivate this objective
+model.obj_rep_runcost = pyo.Objective(
+    rule=rule_obj_rep_runcost,
+    sense=pyo.minimize,
+)
+model.obj_rep_runcost.deactivate()
+
+# define repeat start cost function, deactivate this objective
+model.obj_rep_startcost = pyo.Objective(
+    rule=rule_obj_rep_startcost,
+    sense=pyo.minimize
+)
+model.obj_rep_startcost.deactivate()
+
+# define initial start cost function, dectivate this objective
+model.obj_init_startcost = pyo.Objective(
+    rule=rule_obj_init_startcost,
+    sense=pyo.minimize
+)
+model.obj_init_startcost.deactivate()
+
 # define objective function to minimize total cost
 model.obj_cost = pyo.Objective(
-    rule=rule_obj_cost,
+    expr=(
+        model.obj_init_startcost.expr
+        +model.obj_rep_startcost.expr 
+        +model.obj_rep_runcost.expr 
+    ),
     sense=pyo.minimize
 )
 
+# ======================================
+# SOLVE THE MILP
+# ======================================
 
 # choose the solver 'cplex' - commercial solver with free academic license - you need to install software from IBM
-solver_path = '/opt/homebrew/opt/glpk/bin/glpsol'  # path to glpk solver on mac using homebrew
+# solver_path = '/opt/homebrew/opt/glpk/bin/glpsol'  # path to glpk solver on mac using homebrew
+solver_path = 'C:\\Program Files (x86)\\glpk-4.65\\w64\\glpsol' # path to glpk solver on windows
 opt = pyo.SolverFactory('glpk', executable=solver_path)
 sol_milp = opt.solve(model, tee=False)
 
+# solver_manager = pyo.SolverManagerFactory('neos')
+# os.environ['NEOS_EMAIL'] = '<your email>'
+# opt = pyo.SolverFactory('cplex')
+# sol_milp = solver_manager.solve(model, opt = opt)
 
 # print output
-sol_milp.write()
+print(f'Initial start cost I: {pyo.value(model.obj_init_startcost)} kkr')
+print(f'Repeat start cost S=W+C: {pyo.value(model.obj_rep_startcost)} kkr')
+print(f'Repeat running cost R: {pyo.value(model.obj_rep_runcost)} kkr')
+print(f'Total repeat cost R+S: {
+    pyo.value(model.obj_rep_startcost)
+    + pyo.value(model.obj_rep_runcost)
+    } kkr'
+)
+# sol_milp.write()
 model.pprint()
 
 
 # ==================================================
-# solve relaxed problem to obtain dual variables
+# SOLVE RELAXED LP TO OBTAIN DUAL VARIABLES
 # ==================================================
 
 # fix all integer variables
@@ -414,7 +411,7 @@ model.dual = pyo.Suffix(
     direction=pyo.Suffix.IMPORT_EXPORT
 )
 
-sol_lp = opt.solve(model, tee=True) # for local cplex solver
+sol_lp = opt.solve(model, tee=True) # for local solver
 # sol_lp = solver_manager.solve(model, opt = opt)   # using neos
-sol_milp.write()
+# sol_milp.write()
 model.pprint()
