@@ -215,8 +215,6 @@ One thing to note - if using NEOS - the dual variables may not be returned altho
 
 Using a locally installed version of GLPK does return the duals. Note also that duals can only be returned for a linear problem, not for a problem with integer variables. 
 
-A quirk in GLPK is for the units of duals can be inconsistent, i.e. different for duals for different indices of the same constraint. A commercial solver CPLEX (with free academic license) may have more consistent units. The following result and dual analysis is not affected by this GLPK quirk.
-
 # Solution
 The minimum total repeat cost 3828.5 kkr.
 
@@ -285,7 +283,7 @@ The other possible changes were modifying the max consective running period cons
 
 - The constraint does not take into account effects on cyclicity.
 
-- Even though the duals did not exactly estimate the cost reduction, they did identify the improvement strategy.
+- Even though the duals did not exactly estimate the cost reduction, they did identify the improvement strategy and provided a lower bound on the improvement.
 
 Inspecting the solution to the modified problem (max 4 continuous periods), we see that units 1 and 3 both run for the maximum 4 periods, while unit 1 is the slack unit. For running unit 3 for max 4 consecutive periods, we estimated a cost reduction of -28 kkr. This change has also changed a cold start of unit 1 to a warm start, with an additional cost reduction of $-0.5 \cdot 10 = -5 \text{ kkr}$. Therefore, the total cost reduction would be -33 kkr, the same we obtained in the modified model. The total reduction in production cost associated with allowing this change (33 kkr) must therefore be greater than the cost of running units 1 and 3 for longer.
 
