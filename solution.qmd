@@ -279,9 +279,9 @@ The other possible changes were modifying the max consective running period cons
 
 - This is expected since the modified problem is discontinuous with respect to the state variables $x$, and the change is applied the change to all constraints, not only the indices of the negative duals for the upper bound constraints on unit power generation (\texttt{con\_load\_ub}).
 
-- This constraint does not account for possible changes in the number of starts required for each unit, and the temperature of starts (warm/cold).
+- The duals do not account for possible changes in the number of starts required for each unit, and the temperature of starts (warm/cold).
 
-- The constraint does not take into account effects on cyclicity.
+- The duals do not take into account effects on cyclicity.
 
 - Even though the duals did not exactly estimate the cost reduction, they did identify the improvement strategy and provided a lower bound on the improvement.
 

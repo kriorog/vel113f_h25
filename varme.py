@@ -375,10 +375,9 @@ model.obj_cost = pyo.Objective(
 # SOLVE THE MILP
 # ======================================
 
-# choose the solver 'cplex' - commercial solver with free academic license - you need to install software from IBM
+# choose the solver GLPK - locally installed open source solver 
 # solver_path = '/opt/homebrew/opt/glpk/bin/glpsol'  # path to glpk solver on mac using homebrew
-solver_path = 'C:\\Program Files (x86)\\glpk-4.65\\w64\\glpsol' # path to glpk solver on windows
-# solver_path = 'C:\\Program Files\\IBM\\ILOG\\CPLEX_Studio_Community2211\\cplex\\bin\\x64_win64\\cplex'
+# solver_path = 'C:\\Program Files (x86)\\glpk-4.65\\w64\\glpsol' # path to glpk solver on windows
 opt = pyo.SolverFactory('glpk', executable=solver_path)
 sol_milp = opt.solve(model, tee=True)
 
